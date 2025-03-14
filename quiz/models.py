@@ -1,68 +1,44 @@
 from django.db import models
-from django.contrib.auth.models import User
+
+class User(models.Model):
+    streak = models.PositiveIntegerField(default=0)
+    image = models.ImageField(upload_to='user_images', null=True, blank=True)
+
+    def __str__(self):
+        return self.username
 
 
 class Category(models.Model):
-    name = models.CharField(max_length=100, unique=True)
-    description = models.TextField(blank=True, null=True)
+    name = models.CharField(max_length=255, unique=True)
 
     def __str__(self):
         return self.name
 
 
-class Quiz(models.Model):
-    title = models.CharField(max_length=200)
-    description = models.TextField(blank=True, null=True)
-    creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='created_quizzes')
-    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, related_name='quizzes')
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    def __str__(self):
-        return self.title
-
-
 class Question(models.Model):
-    quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE, related_name='questions')
-    text = models.TextField()
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    question_text = models.CharField(max_length=999)
+    score = models.IntegerField(default=0)
 
     def __str__(self):
-        return self.text[:50]
+        return self.question_text[:50]
 
 
 class Answer(models.Model):
-    question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='answers')
-    text = models.CharField(max_length=255)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    answer_text = models.CharField(max_length=999)
     is_correct = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.text
+        return self.answer_text[:50]
 
 
-class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    streak = models.PositiveIntegerField(default=0)
-
-
-    def __str__(self):
-        return self.user.username
-
-
-class LeaderboardEntry(models.Model):
-    MODE_CHOICES = [
-        ('basic', 'Basic'),
-        ('timed', 'Timed'),
-    ]
-
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='leaderboard_entries')
-    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='leaderboard_entries')
+class GameSession(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    mode = models.CharField(max_length=30)
     score = models.IntegerField(default=0)
-    mode = models.CharField(max_length=50, choices=MODE_CHOICES)
-    updated_at = models.DateTimeField(auto_now=True)
-
-    class Meta:
-        unique_together = ('user', 'category', 'mode')
-        ordering = ['-score']
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.user.username} - {self.category.name} ({self.mode})"
+        return f"{self.user.username} - {self.category.name} ({self.mode}) - {self.score}"
