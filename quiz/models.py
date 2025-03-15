@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.template.defaultfilters import slugify 
 
 
 class Category(models.Model):
@@ -17,6 +18,11 @@ class Quiz(models.Model):
     category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, related_name='quizzes')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    slug = models.SlugField(unique=True)
+
+    def save(self, *args, **kwargs):
+        self.save = slugify(self.name)
+        super(Quiz, self).save(*args, **kwargs)
 
     def __str__(self):
         return self.title
@@ -25,6 +31,7 @@ class Quiz(models.Model):
 class Question(models.Model):
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE, related_name='questions')
     text = models.TextField()
+    
 
     def __str__(self):
         return self.text[:50]
