@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">    
+        <title>
+            Quizhaholic
+            {% block title_block %}
+            {% endblock %}
+        </title>
+
+        <!-- Change url of style sheet here -->
+        <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+
+        <header>
+            <div class="header-left-group">
+                <div class="logo">
+
+                    <!-- Change urls here -->
+                    <h1><a href="index.html"><img src="">Quizhaholic</a></h1> 
+                </div>
+                <nav class="nav_links">
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="categories.html">Categories</a></li>
+                        {% if user.is_authenticated %}
+                        <li><a href="profile.html">Profile</a></li>
+                        {% endif %}
+
+                    </ul>
+                </nav>
+            </div>
+
+            {% block auth_buttons_block %}
+            {% endblock %}
+
+
+            <div class="off-screen-menu">
+                <ul>
+                    <!-- Change urls here -->
+
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="categories.html">Categories</a></li>
+                    <li><a href="profile.html">Profile</a></li>
+                    {% if user.is_authenticated %}
+                    <li><a href="profile.html">Profile</a></li>
+                    {% else %}
+                    <a href="login.html"><button>Login</button></a>
+                    <a href="register.html"><button>Register</button></a>
+                    {% endif %}
+                </ul>
+            </div>
+
+            <button class="burger-menu">☰</button>
+            <div class="menu-overlay"></div>
+
+            <script src="script.js"></script>
+
+        </header>
+
+        {% block main_body_block %}
+        {% endblock %}
+
+        <footer>
+            <nav class = "nav_links"> 
+                <ul>
+                    <li><a href = "index.html">Home</a></li>
+                    <li><a href = "categories.html">Categories</a></li>
+                    {% if user.is_authenticated %}
+                    <li><a href = "profile.html">Profile</a></li>
+                    {% endif %}
+                </ul>
+            <nav>
+        </footer>
+    </body>
+</html>
