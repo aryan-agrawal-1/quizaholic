@@ -1,69 +1,31 @@
-<!DOCTYPE html>
+{% extends 'quiz/second_base.html' %}
+{% load staticfiles %}
 
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">    
-        <title>
-            Quizhaholic
-        </title>
-        <link rel="stylesheet" href="styles.css">
-    </head>
-    <body>
+{% block title_block %}
+{{ category.name }} Play
+{% endblock %}
 
-        <header>
-            <div class="header-left-group">
-                <div class="logo">
-                    <h1><a href="index.html"><img src="">Quizhaholic</a></h1>
-                </div>
-                <nav class="nav_links">
-                    <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="categories.html">Categories</a></li>
-                        <li><a href="profile.html">Profile</a></li>
-                    </ul>
-                </nav>
-            </div>
+{% block main_body_block %}
+<main>
+    <div class="quiz-container">
+        <div class="timer-container">
+            <!-- How do I change the question number -->
+            <span id="question-number">1/xx</span>
+        </div>
 
-            <div class = "auth_buttons">
-                    <a href = "login.html"> <button>Login</button></a>
-                    <a href = "register.html"> <button>Register</button></a>
-            </div>
+        <h2 class="question">{{ question.text }}</h2>
 
-            <button class="burger-menu">☰</button>
+        <form class = "options" method="post" id="question">
+            <button class="option" name = "optioncosen">{{ answer1 }}</button>
+            <button class="option" name = "optioncosen">{{ answer2 }}</button>
+            <button class="option" name = "optioncosen">{{ answer3 }}</button>
+            <button class="option" name = "optioncosen">{{ answer4 }}</button>
+        </form>
 
-        </header>
+        <!-- something like this?? here  -->
+        <p class="score">Score: <span id="score">{{ gamesession.user.score }}</span></p>
 
-        <main>
-            <main>
-                <div class="quiz-container">
-                    <div class="timer-container">
-                        <span id="question-number">1/xx</span>
-                    </div>
-        
-                    <h2 class="question">Which Chinese dynasty ruled from 1644 until 1911?</h2>
-        
-                    <div class="options">
-                        <button class="option">MC_A</button>
-                        <button class="option">MC_B</button>
-                        <button class="option">MC_C</button>
-                        <button class="option">MC_D</button>
-                    </div>
-        
-                    <p class="score">Score: <span id="score">____</span></p>
-                </div>
-            </main>
-                </main>
+    </div>
 
-
-            <footer>
-            <nav class = "nav_links"> 
-                <ul>
-                    <li><a href = "index.html">Home</a></li>
-                    <li><a href = "categories.html">Categories</a></li>
-                    <li><a href = "profile.html">Profile</a></li>
-                </ul>
-            </nav>
-            </footer>
-    </body>
-</html>
+</main>
+{% endblock %}

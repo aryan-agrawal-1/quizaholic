@@ -1,63 +1,27 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">    
-        <title>
-            Quizhaholic
-        </title>
-        <link rel="stylesheet" href="styles.css">
-    </head>
-    <body>
+{% extends 'quiz/second_base.html' %}
+{% load staticfiles %}
 
-        <header>
-            <div class="header-left-group">
-                <div class="logo">
-                    <h1><a href="index.html"><img src="logo.png">Quizhaholic</a></h1>
-                </div>
-                <nav class="nav_links">
-                    <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="categories.html">Categories</a></li>
-                        <li><a href="profile.html">Profile</a></li>
-                    </ul>
-                </nav>
-            </div>
+{% block title_block %}
+{{ category.name }}
+{% endblock %}
 
-            <div class = "auth_buttons">
-                    <a href = "login.html"> <button>Login</button></a>
-                    <a href = "register.html"> <button>Register</button></a>
-            </div>
+{% block main_body_block %}
+<main>
+    <div class="holder">
+        <h2>{{ category.name }}</h2>
+        <label>Choose a game mode or view the leaderboards</label>
+        <label>Learn Mode : Answer questions with no points until you get bored</label>
+        <label>Normal Mode : Answer questions with points until you get one wrong</label>
+        <label>Timed Mode : Answer as many questions as you can in 45 seconds </label>
 
-            <button class="burger-menu">☰</button>
+        <div>
+            <!-- Change the urls here -->
+            <a href="learn.html"><button>Learn Mode</button></a>
+            <a href="play.html"><button>Normal Mode</button></a>
+            <a href="timed.html"><button>Timed Mode</button></a>
+            <a href="leaderboards.html"><button>Leaderboards</button></a>
+        </div>
+    </div>
+</main>
 
-        </header>
-
-        <main>
-            <div class="holder">
-                <h2>Category Name</h2>
-                <label>Choose a game mode or view the leaderboards</label>
-                <label>Learn Mode : Answer questions with no points until you get bored</label>
-                <label>Normal Mode : Answer questions with points until you get one wrong</label>
-                <label>Timed Mode : Answer as many questions as you can in 45 seconds </label>
-
-                <div>
-                    <a href="learn.html"><button>Learn Mode</button></a>
-                    <a href="play.html"><button>Normal Mode</button></a>
-                    <a href="timed.html"><button>Timed Mode</button></a>
-                    <a href="leaderboards.html"><button>Leaderboards</button></a>
-                </div>
-            </div>
-        </main>
-
-            <footer>
-            <nav class = "nav_links"> 
-                <ul>
-                    <li><a href = "index.html">Home</a></li>
-                    <li><a href = "categories.html">Categories</a></li>
-                    <li><a href = "profile.html">Profile</a></li>
-                </ul>
-            </nav>
-            </footer>
-    </body>
-</html>
+{% endblock %}
