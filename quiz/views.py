@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from models import Category, Quiz, Question, LeaderboardEntry
+from models import Category, Quiz, Question, LeaderboardEntry, Answer
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 
@@ -14,12 +14,33 @@ def categories(request):
     return render(request, 'quiz/categories.html', context = context_dict)
 
 #shows catgeory selected and all the quizzes in that category aswell as options to see different modes and leaderboard
-def category(request):
+def category(request, category_slug):
     context_dict = {}   
-    category = get_object_or_404(Category,category)
+    category = get_object_or_404(Category,slug=category_slug)
     context_dict['category'] = category
     return render(request, 'quiz/category.html', context = context_dict)
 
+def fetch_question(request, category_slug, question_id,mode):
+    context_dict = {}
+    category = get_object_or_404(Category, slug=category_slug)
+    question_text = get_object_or_404(Question, category = category, id = question_id)
+    answers = Answer.objects.filter(Answer, question=question_text)
+
+    mode_templates = { 'learn': 'learn.html', 'play': 'play.html', 'timed':'timed.html'}
+    template = mode_templates.get(mode,'play.html')
+    context_dict['category'] = category
+    context_dict['question'] = question_text
+    context_dict['answers'] = answers
+    context_dict['mode'] = mode 
+    return render(request, template, context = context_dict)
+
+
+@login_required
+def delete_question(request, category_slug, question_id):
+
+
+@login_required
+def delete_category(request, category_slug):
 
 def leaderboard(request):
     context_dict = {} 

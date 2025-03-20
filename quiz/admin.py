@@ -1,12 +1,16 @@
 from django.contrib import admin
-from quiz.models import Quiz, Question, Profile
+from .models import User, Category, Question, Answer, GameSession,Quiz
 
-# Register your models here.
+admin.site.register(User)
+admin.site.register(Category)
+admin.site.register(Question)
+admin.site.register(Answer)
+admin.site.register(GameSession)
+admin.site.register(Quiz, QuizAdmin, QuestionAdmin, Question)
 
 class QuizAdmin(admin.ModelAdmin):
     list_display = ('question', 'category', 'url')
 
 class QuestionAdmin(admin.ModelAdmin):
-    prepopulated_fields = {'slug':('name',)}
+    prepopulated_fields = {'slug':('question',)}
 
-admin.site.register(Quiz, QuizAdmin, QuestionAdmin,Profile, Question)
