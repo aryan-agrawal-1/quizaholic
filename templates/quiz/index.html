@@ -1,0 +1,32 @@
+{% extends 'quiz/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+Home
+{% endblock %}
+
+{% block auth_buttons_block %}
+<div class = "auth_buttons">
+    <!-- Change urls here -->
+    {% if user.is_authenticated %}
+    <h2 class = "message">Hello {{user.username}}!</h2>
+    <a href="profile.html"><img src="pfp.png"></a>
+    {% else %}
+    <a href = "login.html"> <button>Login</button></a>
+    <a href = "register.html"> <button>Register</button></a>
+    {% endif %}
+</div>
+{% endblock %}
+
+
+{% block main_block %}
+<main>    
+    <div class="holder">
+        <h1>Quizaholic</h1>
+        <label> “Welcome to Quizaholic! Test your knowledge, challenge yourself, and climb the leaderboards. Are you ready to play?”</label>
+        <br>
+        <!-- Change url here -->
+        <a href ="categories.html"><button>Start Game!</button></a>
+    </div>
+</main>
+{% endblock %}
