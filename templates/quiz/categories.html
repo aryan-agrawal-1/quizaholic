@@ -7,8 +7,8 @@ Home
 
 {% block auth_buttons_block %}
 <div class = "auth_buttons">
-    <a href = "login.html"> <button>Login</button></a>
-    <a href = "register.html"> <button>Register</button></a>
+    <a href = "{% url 'quiz:login' %}"> <button>Login</button></a>
+    <a href = "{% url 'quiz:register' %}"> <button>Register</button></a>
 </div>
 {% endblock %}
 
@@ -27,8 +27,7 @@ Home
 
     {% if categories %}
         {% for c in categories %}
-        <!-- Use urls here + varibles here -->
-        <a href="category.html">
+        <a href= "{%url 'quiz:category' c.slug %}">
             <div class="category_container">
                 <img src="" alt="Category">
                 <label>{{ c.name }}</label>

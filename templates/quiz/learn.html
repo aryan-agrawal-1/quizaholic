@@ -14,7 +14,7 @@
         <header>
             <div class="header-left-group">
                 <div class="logo">
-                    <h1><a href="index.html"><img src="logo.png">Quizhaholic</a></h1>
+                    <h1><a href="{% url 'quiz/index %'}"><img src="logo.png">Quizhaholic</a></h1>
                 </div>
                 <nav class="nav_links">
                     <ul>
@@ -37,12 +37,15 @@
             <main>
                 <div class="quiz-container">
                     <div class="timer-container">
-                        <span id="question-number">1/xx</span>
+                        <span id="question-number">{{question.id}}/xx</span>
                     </div>
         
-                    <h2 class="question">Which Chinese dynasty ruled from 1644 until 1911?</h2>
+                    <h2 class="question">{{question.question_text}}</h2>
         
                     <div class="options">
+                        {% for answer in answers %}
+                            <button class = "option"> {{answer.text}}</button>
+                        {% end for %}
                         <button class="option">MC_A</button>
                         <button class="option">MC_B</button>
                         <button class="option">MC_C</button>
