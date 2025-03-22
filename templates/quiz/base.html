@@ -12,7 +12,7 @@
         </title>
 
         <!-- Change url of style sheet here -->
-        <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="static/files/styles.css">
     </head>
     <body>
 
@@ -26,7 +26,7 @@
                 <nav class="nav_links">
                     <ul>
                         <li><a href="index.html">Home</a></li>
-                        <li><a href="categories.html">Categories</a></li>
+                        <li><a href= "{% url 'quiz:categories'% }">Categories</a></li>
                         {% if user.is_authenticated %}
                         <li><a href="profile.html">Profile</a></li>
                         {% endif %}
@@ -44,7 +44,7 @@
                     <!-- Change urls here -->
 
                     <li><a href="index.html">Home</a></li>
-                    <li><a href="categories.html">Categories</a></li>
+                    <li><a href="{% url 'quiz:categories'% }">Categories</a></li>
                     <li><a href="profile.html">Profile</a></li>
                     {% if user.is_authenticated %}
                     <li><a href="profile.html">Profile</a></li>
@@ -58,7 +58,7 @@
             <button class="burger-menu">☰</button>
             <div class="menu-overlay"></div>
 
-            <script src="script.js"></script>
+            <script src="static/files/script.js"></script>
 
         </header>
 
@@ -69,7 +69,7 @@
             <nav class = "nav_links"> 
                 <ul>
                     <li><a href = "index.html">Home</a></li>
-                    <li><a href = "categories.html">Categories</a></li>
+                    <li><a href = "{% url 'quiz:categories'% }">Categories</a></li>
                     {% if user.is_authenticated %}
                     <li><a href = "profile.html">Profile</a></li>
                     {% endif %}
