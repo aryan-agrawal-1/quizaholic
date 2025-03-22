@@ -24,7 +24,7 @@ def fetch_question(request, category_slug, question_id,mode):
     context_dict = {}
     category = get_object_or_404(Category, slug=category_slug)
     question_text = get_object_or_404(Question, category = category, id = question_id)
-    answers = Answer.objects.filter( question=question_text)
+    answers = Question.get_answer()
 
     mode_templates = { 'learn': 'quiz/learn.html', 'play': 'quiz/play.html', 'timed':'quiz/timed.html'}
     template = mode_templates.get(mode,'quiz/play.html')

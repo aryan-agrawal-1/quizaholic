@@ -1,4 +1,5 @@
 from django.db import models
+import random
 
 class User(models.Model):
     streak = models.PositiveIntegerField(default=0)
@@ -44,6 +45,14 @@ class Question(models.Model):
 
     def __str__(self):
         return self.question_text[:50]
+    
+    def get_answer(self):
+        answers= list(Answer.objects.filter(question = self))
+        data = []
+        random.shuffle(answers)
+        for answer in answers:
+            data.append({'answer' : answer.answer_text, 'is_correct': answer.is_correct})
+        return data
 
 
 class Answer(models.Model):
@@ -53,6 +62,8 @@ class Answer(models.Model):
 
     def __str__(self):
         return self.answer_text[:50]
+    
+
 
 
 class GameSession(models.Model):
