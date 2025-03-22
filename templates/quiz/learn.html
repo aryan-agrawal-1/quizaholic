@@ -36,21 +36,21 @@
 
             <main>
                 <div class="quiz-container">
-                    <div class="timer-container">
-                        <span id="question-number">{{question.id}}/xx</span>
-                    </div>
-        
-                    <h2 class="question">{{question.question_text}}</h2>
-        
-                    <div class="options">
-                        {% for answer in answers %}
-                            <button class = "option"> {{answer.text}}</button>
-                        {% end for %}
-                        <button class="option">MC_A</button>
-                        <button class="option">MC_B</button>
-                        <button class="option">MC_C</button>
-                        <button class="option">MC_D</button>
-                    </div>
+                    {%if question %}
+                        <form method = "POST">
+                            {% csrf_token %}
+                            <div class="timer-container">
+                                span id= "question-number"> xx/x</div>span>
+                            </div>
+                            <h2 class="question">{{question.question_text}}</h2> 
+                            <div class="options">
+                                {{form.answers}}
+                            </div>
+                            <button type = "submit" name = "answers" value="{{ value}}">{{label}}</button>
+                        </form>
+                    {% else %}
+                    <p> No questions avaliable, </p>
+                    {% endif %}
                 </div>
             </main>
 

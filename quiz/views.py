@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from models import Category, Quiz, Question, GameSession, Answer
+from quiz.models import Category, Question, GameSession, Answer
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
@@ -31,7 +31,7 @@ def fetch_question(request, category_slug, question_id,mode):
     question_text = get_object_or_404(Question, category = category, id = question_id)
     answers = question_text.get_answer()
 
-    mode_templates = { 'learn': 'quiz/learn.html', 'play': 'quiz/play.html', 'timed':'quiz/timed.html'}
+    mode_templates = { 'learn': 'quiz/learn.html', 'normal': 'quiz/play.html', 'timed':'quiz/timed.html'}
     template = mode_templates.get(mode,'quiz/play.html')
     form = AnswerForm(answers=answers)
     if request.method == "POST":
