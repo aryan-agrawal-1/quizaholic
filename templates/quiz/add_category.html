@@ -13,12 +13,8 @@ AddCategory
 
         <form id="add_category_form" method="post" action="{% url 'quiz:add_category' %}">
             {% csrf_token %}
+            {{ form.as_p }}
 
-            <!-- Change this to use forms -->
-            <label>New Category Name :</label>
-            <br>
-            <input type="text" name="new-category" value="" size="50" />
-            
             <input type="submit" value="Make Category" />
         </form>
     </div>

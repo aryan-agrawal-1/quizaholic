@@ -19,8 +19,8 @@ header {
     background-color: #ccc;
     padding: 25px 20px;
     outline: 2px solid black;
-    width: 100%;
-
+    width:auto;
+    min-width: 100vw;
 }
 
 .header-left-group {
@@ -29,15 +29,14 @@ header {
     gap: 30px; 
 }
 
- .logo h1 {
-    font-size: 30px;
-    margin: 0;
+ .logo h1, .container h1{
     font-family:"Courier New", monospace;
+    margin: 0;
+    font-size: 30px;
     line-height: 1;
 } 
 
-
-.logo a {
+.logo a, footer a {
     text-decoration: none;
     color: black;
 }
@@ -45,11 +44,9 @@ header {
 .logo img{
     width:30px;
     height:30px;
+    border-radius: 8px;
     align-items: center;
-    border-radius: 8px;
     padding-right: 10px;
-    border-radius: 8px;
-
 }
 
 .nav_links{
@@ -144,6 +141,7 @@ header {
 .auth_buttons {
     display: flex;
     gap: 10px;
+    margin-right: 25px;
 }
 
 
@@ -551,7 +549,7 @@ form label {
     float:left;
 }
 
-input[type=text],input[type=password],#difficulty ,input[type=email]{
+input[type=text],input[type=password],select ,input[type=email]{
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
@@ -580,7 +578,7 @@ input[type=submit] {
   } 
   
 
-  #user_form li {
+  #user_form li ,#add_category_form li {
     color:red;
   }
 
@@ -625,6 +623,9 @@ footer {
     bottom:  0;
     width: 100%;
     outline: 2px solid rgb(0, 0, 0);
+    width:auto;
+    min-width: 100vw;
+
 
 }
 
@@ -664,10 +665,11 @@ footer a {
         gap: 20px;
     }
 
-    
+
     .burger-menu {
         display: block; 
         order: 2; 
+        margin-right: 20px;
     }
 
     .container {
