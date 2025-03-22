@@ -28,11 +28,11 @@ Leaderboards - {{ category.name }}
             </div>
             <div>
                 <table class="lbTable">
-                    
+                    {% if user.is_authenticated %}
                     <!-- Something here -->
-                    <tr><td><img src="{% static 'images/pfp.png' %}"> {{ user.username }}</td><td>120</td></tr>
-
-                </table>
+                    <tr class = "userScore"><th><img src="{{ user.userprofile.profile_picture.url }}" alt="Profile Picture" onerror="this.src='/media/profile_pics/default.png';"> {{ user.username }}</th><th>120</th></tr>
+                    {% endif %}
+                    </table>
             </div>
         </div>
 
@@ -48,9 +48,10 @@ Leaderboards - {{ category.name }}
                 </table>
             </div>
             <table class="lbTable">
-
+                {% if user.is_authenticated %}
                 <!-- Something here -->
-                <tr class = "userScore"><th><img src="{% static 'images/pfp.png' %}"> {{ user.username }}</th><th>120</th></tr>
+                <tr class = "userScore"><th><img src="{{ user.userprofile.profile_picture.url }}" alt="Profile Picture" onerror="this.src='/media/profile_pics/default.png';"> {{ user.username }}</th><th>120</th></tr>
+                {% endif %}
             </table>
 
         </div>

@@ -28,7 +28,7 @@ def register(request):
 
             if 'profile_picture' in request.FILES:
                 profile.profile_picture = request.FILES['profile_picture']
-                
+            profile.streak = 0; 
             profile.save()
             registered = True
         else:
@@ -53,7 +53,7 @@ def user_login(request):
                 return HttpResponse("Your account is disabled.")  
         else:
             print(f"Invalid logsein details: {username}, {password}")
-            return HttpRespon("Invalid login details supplied.")
+            return HttpResponse("Invalid login details supplied.")
     else: 
         return render(request, 'quiz/login.html')
     

@@ -25,9 +25,9 @@
                 <nav class="nav_links">
                     <ul>
                         <li><a href="{% url 'quiz:index' %}">Home</a></li>
-                        <li><a href="categories.html">Categories</a></li>
+                        <li><a href="{% url 'quiz:categories' %}">Categories</a></li>
                         {% if user.is_authenticated %}
-                        <li><a href="profile.html">Profile</a></li>
+                        <li><a href="{% url 'quiz:profile' %}">Profile</a></li>
                         <li><a href = "{% url 'quiz:logout' %}">Logout</a></li>
                         {% endif %}
 
@@ -45,9 +45,9 @@
                     <!-- Change urls here -->
 
                     <li><a href="{% url 'quiz:index' %}">Home</a></li>
-                    <li><a href="categories.html">Categories</a></li>
+                    <li><a href="{% url 'quiz:categories' %}">Categories</a></li>
                     {% if user.is_authenticated %}
-                    <li><a href="profile.html">Profile</a></li>
+                    <li><a href="{% url 'quiz:profile' %}">Profile</a></li>
                     <li><a href="{% url 'quiz:logout' %}">Logout</a></li>
                     {% else %}
                     <a href="{% url 'quiz:login' %}"><button>Login</button></a>
