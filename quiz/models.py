@@ -1,13 +1,15 @@
 from django.db import models
 import random
+from django.template.defaultfilters import slugify
+from django.contrib.auth.models import User
 
-class User(models.Model):
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     streak = models.PositiveIntegerField(default=0)
     image = models.ImageField(upload_to='user_images', null=True, blank=True)
 
     def __str__(self):
         return self.username
-
 
 class Category(models.Model):
     name = models.CharField(max_length=255, unique=True)
@@ -39,9 +41,16 @@ class Quiz(models.Model):
 
 
 class Question(models.Model):
+    DIFFICULTY_CHOICES = [
+        ('easy', 'Easy'),
+        ('medium', 'Medium'),
+        ('hard', 'Hard'),
+    ]
+
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     question_text = models.CharField(max_length=999)
     score = models.IntegerField(default=0)
+    difficulty = models.CharField(max_length=10, choices=DIFFICULTY_CHOICES)
 
     def __str__(self):
         return self.question_text[:50]
@@ -53,6 +62,16 @@ class Question(models.Model):
         for answer in answers:
             data.append({'answer' : answer.answer_text, 'is_correct': answer.is_correct})
         return data
+
+    def save(self, *args, **kwargs):
+        if self.difficulty == 'easy':
+            self.score = 10
+        elif self.difficulty == 'medium':
+            self.score = 20
+        elif self.difficulty == 'hard':
+            self.score = 30
+        
+        super().save(*args, **kwargs)
 
 
 class Answer(models.Model):
