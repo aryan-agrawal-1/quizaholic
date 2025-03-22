@@ -29,10 +29,27 @@ def fetch_question(request, category_slug, question_id,mode):
     context_dict = {}
     category = get_object_or_404(Category, slug=category_slug)
     question_text = get_object_or_404(Question, category = category, id = question_id)
-    answers = Question.get_answer()
+    answers = question_text.get_answer()
 
     mode_templates = { 'learn': 'quiz/learn.html', 'play': 'quiz/play.html', 'timed':'quiz/timed.html'}
     template = mode_templates.get(mode,'quiz/play.html')
+    form = AnswerForm(answers=answers)
+    if request.method == "POST":
+        form = AnswerForm(request.POST, answers = answers)
+        if form.is_valid():
+            selected_answer = form.cleaned_data['answer']
+            for a in answers:
+                if a['is_correct'] == True:
+                    request.session['score'] = request.session.get('score',0) + question_text.score
+                    break
+        
+        next_question = Question.objects.filter(category = category)
+
+        if next_question:
+            return redirect( 'quiz:fetch_question', category_slug = category_slug, question_id = next_question.id )
+        else:
+            return redirect('quiz:category')
+        
     context_dict['category'] = category
     context_dict['question'] = question_text
     context_dict['answers'] = answers
