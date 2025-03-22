@@ -17,7 +17,7 @@ AddCategory
         <h3> Enter your question here! </h3>
 
         <!-- couldnt get the url here to work -->
-        <form id="add_question_form" method="post" action="{% url 'quiz:add_category'%}">
+        <form id="add_question_form" method="post" action="{% url 'quiz:add_question' category.slug %}">
 
             {% csrf_token %}
             {{ form.as_p }}

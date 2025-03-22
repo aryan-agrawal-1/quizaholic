@@ -89,10 +89,10 @@ def add_category(request):
     form = AddCategoryForm()
 
     if request.method == 'POST':
-        form = AddCategoryForm(request.POST)
+        form = AddCategoryForm(request.POST, request.FILES)
         
         if form.is_valid():
-            category = form.save(commit=True)
+            category = form.save(user = request.user)
             return redirect(reverse('quiz:add_question', kwargs={'category_name_slug': category.slug}))
         else:
             print(form.errors)
@@ -115,12 +115,11 @@ def add_question(request, category_name_slug):
         form = AddQuestionForm(request.POST)
 
         if form.is_valid():
-            question = Question(
-                category = category,
-                question_text = form.cleaned_data['question'],
-                difficulty = form.cleaned_data['difficulty']
+            question = Question.objects.create(
+                category=category,
+                question_text=form.cleaned_data['question_text'],
+                difficulty=form.cleaned_data['difficulty']
             )
-            question.save()
 
             Answer.objects.create(
                 question=question,
@@ -146,9 +145,8 @@ def add_question(request, category_name_slug):
                 is_correct=False
             )
 
-            return redirect(request.path)
-        
+            return redirect('quiz:add_question', category_name_slug=category_name_slug)
         else:
             print(form.errors)
 
-    return render(request, 'quiz/add_question.html',  context={'form': form})
+    return render(request, 'quiz/add_question.html', {'form': form, 'category': category})

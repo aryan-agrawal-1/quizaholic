@@ -11,7 +11,7 @@ AddCategory
         <h1>Add Category</h1>
         <h3> Create your category here! </h3>
 
-        <form id="add_category_form" method="post" action="{% url 'quiz:add_category' %}">
+        <form id="add_category_form" method="post" action="{% url 'quiz:add_category' %}" enctype="multipart/form-data">
             {% csrf_token %}
             {{ form.as_p }}
 
