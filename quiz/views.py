@@ -82,7 +82,7 @@ def upload_profile_picture(request):
 @login_required
 def profile(request):
     categories = Category.objects.filter(created_by = request.user)
-    return render(request, 'quiz/profile.html', {categories: categories})
+    return render(request, 'quiz/profile.html', {'categories': categories})
 
 @login_required
 def add_category(request):

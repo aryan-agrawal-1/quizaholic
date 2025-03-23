@@ -24,12 +24,11 @@ Profile
 
         <!-- Something like this here -->
         {% if categories %}
-            {% for c in categories %}
-            <!-- Use urls here + varibles here -->
-            <a href="{% url 'add_question' category_name_slug=category_name_slug %}">
+            {% for category in categories %}
+            <a href="{% url 'quiz:add_question' category.slug %}">
                 <div class="category_container">
-                    <img src="" alt="Category">
-                    <label>{{ c.name }}</label>
+                    <img src="{{ category.category_image.url }}" alt="Category" onerror="this.src='/media/category_imgs/default.jpg';">
+                    <label>{{ category.name }}</label>
                 </div>
             </a>
             {% endfor %}

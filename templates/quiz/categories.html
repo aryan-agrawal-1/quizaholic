@@ -16,12 +16,12 @@ Categories
    <div class="categories-grid">
 
     {% if categories %}
-        {% for c in categories %}
+        {% for category in categories %}
         <!-- Use urls here + varibles here -->
         <a href="category.html">
             <div class="category_container">
-                <img src="" alt="Category">
-                <label>{{ c.name }}</label>
+                <img src="{{ category.category_image.url }}" alt="Category" onerror="this.src='/media/category_imgs/default.jpg';">
+                <label>{{ category.name }}</label>
             </div>
         </a>
         {% endfor %}

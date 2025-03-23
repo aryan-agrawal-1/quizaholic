@@ -14,7 +14,7 @@ class UserProfile(models.Model):
 class Category(models.Model):
     name = models.CharField(max_length=255, unique=True)
     slug = models.SlugField(max_length=255, unique=True, blank=True)
-    category_image = models.ImageField(upload_to='category_imgs', blank=True)
+    category_image = models.ImageField(upload_to='category_imgs', blank=True, default='category_imgs/default.jpg')
     created_by = models.ForeignKey(User,on_delete=models.CASCADE, null=True)
 
     def __str__(self):
