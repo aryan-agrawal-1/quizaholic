@@ -16,9 +16,9 @@
 
         <div>
             <!-- Change the urls here -->
-            <a href="learn.html"><button>Learn Mode</button></a>
-            <a href="play.html"><button>Normal Mode</button></a>
-            <a href="timed.html"><button>Timed Mode</button></a>
+            <a href="{% url 'quiz:fetch_question' category.slug 'learn' first_question.id %}"><button>Learn Mode</button></a>
+            <a href="{% url 'quiz:fetch_question' category.slug 'normal' first_question.id %}"><button>Normal Mode</button></a>
+            <a href="{% url 'quiz:fetch_question' category.slug 'timed' first_question.id %}"><button>Timed Mode</button></a>
             <a href="{% url 'quiz:leaderboard' category.slug %}"><button>Leaderboards</button></a>
         </div>
     </div>

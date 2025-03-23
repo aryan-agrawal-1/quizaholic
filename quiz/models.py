@@ -1,4 +1,5 @@
 from django.db import models
+import random
 from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
 
@@ -40,6 +41,14 @@ class Question(models.Model):
 
     def __str__(self):
         return self.question_text[:50]
+    
+    def get_answer(self):
+        answers= list(Answer.objects.filter(question = self))
+        data = []
+        random.shuffle(answers)
+        for answer in answers:
+            data.append({'answer' : answer.answer_text, 'is_correct': answer.is_correct})
+        return data
 
     def save(self, *args, **kwargs):
         if self.difficulty == 'easy':

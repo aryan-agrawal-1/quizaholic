@@ -41,3 +41,11 @@ class AddQuestionForm(forms.Form):
     option3 = forms.CharField(max_length=999)
     option4 = forms.CharField(max_length=999)
     difficulty = forms.ChoiceField(choices=Question.DIFFICULTY_CHOICES, label="Difficulty")
+
+class AnswerForm(forms.ModelForm):
+    answers = forms.ChoiceField(widget=forms.RadioSelect, choices= [], required = True)
+
+    def __init__(self, *args, answers =None, **kwargs):
+        super().__init__(*args, **kwargs)
+        if answers:
+            self.fields['answers'].choices = [(a['answer'], a['answer']) for a in answers]
