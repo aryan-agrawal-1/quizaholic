@@ -19,7 +19,7 @@
             <a href="learn.html"><button>Learn Mode</button></a>
             <a href="play.html"><button>Normal Mode</button></a>
             <a href="timed.html"><button>Timed Mode</button></a>
-            <a href="leaderboards.html"><button>Leaderboards</button></a>
+            <a href="{% url 'quiz:leaderboard' category.slug %}"><button>Leaderboards</button></a>
         </div>
     </div>
 </main>

@@ -711,7 +711,9 @@ footer a {
         grid-template-columns: repeat(1, 1fr);
     
     }
-
+    .holder h2 {
+        font-size: 29px;
+    }
 }
 
 @media (min-width: 901px) {

@@ -18,7 +18,7 @@ Categories
     {% if categories %}
         {% for category in categories %}
         <!-- Use urls here + varibles here -->
-        <a href="category.html">
+        <a href="{% url 'quiz:category' category.slug %}">
             <div class="category_container">
                 <img src="{{ category.category_image.url }}" alt="Category" onerror="this.src='/media/category_imgs/default.jpg';">
                 <label>{{ category.name }}</label>
@@ -29,14 +29,7 @@ Categories
         <li><strong>There are no categories present.</strong></li>
     {% endif %}
 
-        <!-- Remove this later on  -->
-        <!-- <a href="category.html">
-            <div class="category_container">
-                <img src="gk.jpg" alt="Category">
-                <label>Category XX</label>
-            </div>
-        </a> -->
-    </div>
+</div>
 </main>
 {% endblock %}
 

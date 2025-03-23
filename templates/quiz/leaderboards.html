@@ -16,23 +16,33 @@ Leaderboards - {{ category.name }}
    <div class="leaderboards_container">
 
         <div class="lbNormal">
-            <h2><u>Classic</u></h2>
+            <h2><u>Normal</u></h2>
             <div class = "lbNormal2">
                 <table class="lbTable">
                     <tr><th>User</th><th>Score</th></tr>
-
-                    <!-- Use loop here for all users -->
-                    <tr><td><img src="{% static 'images/pfp.png' %}"> USer1</td><td>120</td></tr>
-                    
+                    {% if normal %}
+                        {% for game in normal %}
+                        <tr>
+                            <td><img src="{% static 'images/pfp.png' %}"> {{ game.user.username }}</td>
+                            <td>{{ game.score }}</td>
+                        </tr>
+                        {% endfor %}
+                    {% endif %}
                 </table>
             </div>
             <div>
                 <table class="lbTable">
                     {% if user.is_authenticated %}
-                    <!-- Something here -->
-                    <tr class = "userScore"><th><img src="{{ user.userprofile.profile_picture.url }}" alt="Profile Picture" onerror="this.src='/media/profile_pics/default.png';"> {{ user.username }}</th><th>120</th></tr>
-                    {% endif %}
-                    </table>
+                    <tr class = "userScore">
+                        <th><img src="{{ user.userprofile.profile_picture.url }}" alt="Profile Picture" onerror="this.src='/media/profile_pics/default.png';"> {{ user.username }}</th>
+                        {% if user_score_timed %} 
+                        <th>user_score_timed.score</th>
+                        {% else %}
+                        <th>0</th>
+                        {% endif %}
+                    </tr>
+                    {% endif %}    
+                </table>
             </div>
         </div>
 
@@ -41,16 +51,26 @@ Leaderboards - {{ category.name }}
             <div class="lbTimed2">
                 <table class="lbTable">
                     <tr><th>User</th><th>Score</th></tr>
-
-                    <!-- Use loop here for all users -->
-                    <tr><td><img src="{% static 'images/pfp.png' %}"> USer1</td><td>120</td></tr>
-
+                    {% if timed %}
+                        {% for game in timed %}
+                        <tr>
+                            <td><img src="{% static 'images/pfp.png' %}"> {{ game.user.username }}</td>
+                            <td>{{ game.score }}</td>
+                        </tr>
+                        {% endfor %}
+                    {% endif %}
                 </table>
             </div>
             <table class="lbTable">
                 {% if user.is_authenticated %}
-                <!-- Something here -->
-                <tr class = "userScore"><th><img src="{{ user.userprofile.profile_picture.url }}" alt="Profile Picture" onerror="this.src='/media/profile_pics/default.png';"> {{ user.username }}</th><th>120</th></tr>
+                <tr class = "userScore">
+                    <th><img src="{{ user.userprofile.profile_picture.url }}" alt="Profile Picture" onerror="this.src='/media/profile_pics/default.png';"> {{ user.username }}</th>
+                    {% if user_score_normal %} 
+                    <th>user_score_normal.score</th>
+                    {% else %}
+                    <th>0</th>
+                    {% endif %}
+                </tr>
                 {% endif %}
             </table>
 

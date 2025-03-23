@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .forms import *
 from django.contrib.auth import login, logout, authenticate
 from django.http import HttpResponse
@@ -10,6 +10,46 @@ from django.contrib.auth.decorators import login_required
 
 def index(request):
     return render(request, 'quiz/index.html')
+
+#lists all the different catgeories avaliable
+def categories(request):
+    categories = Category.objects.all()
+    context_dict={}
+    context_dict['categories'] = categories
+    return render(request, 'quiz/categories.html', context = context_dict)
+
+#shows catgeory selected and all the quizzes in that category aswell as options to see different modes and leaderboard
+def category(request,category_name):
+    context_dict = {}   
+    category = get_object_or_404(Category,slug=category_name)
+    context_dict['category'] = category
+    return render(request, 'quiz/category.html', context = context_dict)
+
+def leaderboard(request, category_name):
+    context_dict = {} 
+    category = get_object_or_404(Category, slug=category_name)
+    leaderboard_entry_normal = GameSession.objects.filter(mode= "normal", category=category)
+    leaderboard_entry_timed = GameSession.objects.filter(mode = "timed", category=category )
+
+    scores = GameSession.objects.filter(category=category).order_by("-score")
+
+    user_score_normal = None
+    user_score_timed = None
+
+    if request.user.is_authenticated:
+        user_score_normal  = GameSession.objects.filter(mode = "normal", category=category , user = request.user )
+        user_score_timed = GameSession.objects.filter(mode = "timed", category=category , user = request.user )
+
+
+    context_dict['category'] = category
+    context_dict['normal'] = leaderboard_entry_normal
+    context_dict['timed'] = leaderboard_entry_timed
+    context_dict['score'] = scores
+    context_dict['user_score_normal'] = user_score_normal
+    context_dict['user_score_timed'] = user_score_timed
+
+    return render(request, 'quiz/leaderboards.html', context = context_dict)
+
 
 def register(request):
     registered = False
