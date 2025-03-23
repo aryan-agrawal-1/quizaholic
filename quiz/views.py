@@ -14,6 +14,7 @@ def index(request):
 #lists all the different catgeories avaliable
 def categories(request):
     categories = Category.objects.all()
+    print(categories)
     context_dict={}
     context_dict['categories'] = categories
     return render(request, 'quiz/categories.html', context = context_dict)
@@ -22,10 +23,13 @@ def categories(request):
 def category(request, category_slug):
     context_dict = {}   
     category = get_object_or_404(Category,slug=category_slug)
+    questions = get_object_or_404(Question, category=category)
     context_dict['category'] = category
+    context_dict['questions'] = questions
+    context_dict['mode'] = 'learn'
     return render(request, 'quiz/category.html', context = context_dict)
 
-def fetch_question(request, category_slug, question_id,mode): 
+def fetch_question(request, category_slug, mode, question_id): 
     context_dict = {}
     category = get_object_or_404(Category, slug=category_slug)
     question_text = get_object_or_404(Question, category = category, id = question_id)
@@ -43,12 +47,12 @@ def fetch_question(request, category_slug, question_id,mode):
                     request.session['score'] = request.session.get('score',0) + question_text.score
                     break
         
-        next_question = Question.objects.filter(category = category)
+        next_question = Question.objects.filter(category = category).first()
 
         if next_question:
-            return redirect( 'quiz:fetch_question', category_slug = category_slug, question_id = next_question.id )
+            return redirect( 'quiz:fetch_question', category_slug = category_slug, mode = mode, question_id = next_question.id )
         else:
-            return redirect('quiz:category')
+            return redirect('quiz:category', category_slug = category_slug)
         
     context_dict['category'] = category
     context_dict['question'] = question_text

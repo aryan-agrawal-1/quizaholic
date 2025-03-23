@@ -12,7 +12,8 @@
         </title>
 
         <!-- Change url of style sheet here -->
-        <link rel="stylesheet" href="static/files/styles.css">
+        <link rel="stylesheet" href="{% static 'files/styles.css' %}">
+        <script src="{% static 'files/script.js' %}"></script>
     </head>
     <body>
 
@@ -69,7 +70,7 @@
             <nav class = "nav_links"> 
                 <ul>
                     <li><a href = "index.html">Home</a></li>
-                    <li><a href = "{% url 'quiz:categories'% }">Categories</a></li>
+                    <li><a href = "{% url 'quiz:categories' %}">Categories</a></li>
                     {% if user.is_authenticated %}
                     <li><a href = "profile.html">Profile</a></li>
                     {% endif %}

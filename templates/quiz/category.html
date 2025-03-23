@@ -26,7 +26,7 @@
 
             <div class = "auth_buttons">
                     <a href = "login.html"> <button>Login</button></a>
-                    <a href = "{% url 'quiz:register' %}"> <button>Register</button></a>
+                    <a href = "register.html"> <button>Register</button></a>
             </div>
 
             <button class="burger-menu">☰</button>
@@ -42,9 +42,9 @@
                 <label>Timed Mode : Answer as many questions as you can in 45 seconds </label>
 
                 <div>
-                    <a href="{% url 'quiz:fetch_question' %}"><button>Learn Mode</button></a>
-                    <a href="{% url 'quiz:fetch_question' %}" ><button>Normal Mode</button></a>
-                    <a href="{% url 'quiz:fetch_question' %}"><button>Timed Mode</button></a>
+                    <a href="{% url 'quiz:fetch_question' category.slug mode question.id %}"><button>Learn Mode</button></a>
+                    <a href="{% url 'quiz:fetch_question' category.slug mode question.id %}" ><button>Normal Mode</button></a>
+                    <a href="{% url 'quiz:fetch_question' category.slug mode question.id %}"><button>Timed Mode</button></a>
                     <a href="{% url 'quiz:leaderboard' %}"><button>Leaderboards</button></a>
                 </div>
             </div>

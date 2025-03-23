@@ -13,7 +13,8 @@ Home
 {% endblock %}
 
 
-{% block main_block %}
+{% block main_body_block %}
+<h1>Test: This should be rendered</h1>
 <main class = "categories">
 
     <div class="container">
@@ -29,7 +30,7 @@ Home
         {% for c in categories %}
         <a href= "{%url 'quiz:category' c.slug %}">
             <div class="category_container">
-                <img src="" alt="Category">
+                <img src="gk.jpg" alt="Category">
                 <label>{{ c.name }}</label>
             </div>
         </a>
