@@ -3,7 +3,7 @@ import random
 from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
 
-class UserProfile(models.Model):
+class User(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     streak = models.PositiveIntegerField(default=0)
     image = models.ImageField(upload_to='user_images', null=True, blank=True)
@@ -60,7 +60,7 @@ class Question(models.Model):
         data = []
         random.shuffle(answers)
         for answer in answers:
-            data.append({'answer' : answer.answer_text, 'is_correct': answer.is_correct})
+            data.append({'answer_text' : answer.answer_text, 'is_correct': answer.is_correct})
         return data
 
     def save(self, *args, **kwargs):

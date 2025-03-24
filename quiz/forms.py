@@ -22,13 +22,13 @@ class AddQuestionForm(forms.ModelForm):
         model = Question
         fields = ('question_text', 'category', 'score', 'difficulty')
 
-class AnswerForm(forms.ModelForm):
+class AnswerForm(forms.Form):
     answers = forms.ChoiceField(widget=forms.RadioSelect, choices= [], required = True)
 
-    def __init__(self, *args, answers =None, **kwargs):
+    def __init__(self,answers, *args,  **kwargs):
         super().__init__(*args, **kwargs)
         if answers:
-            self.fields['answers'].choices = [(a['answer'], a['answer']) for a in answers]
+            self.fields['answers'].choices = [(a['answer_text'], a['answer_text']) for a in answers]
 
 
 

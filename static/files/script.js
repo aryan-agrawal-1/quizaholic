@@ -23,4 +23,15 @@ document.addEventListener('DOMContentLoaded', function() {
     offScreenMenu.querySelectorAll('a').forEach(item => {
         item.addEventListener('click', toggleMenu);
     });
+
 });
+
+function showWrongAnswerPopup() {
+    const popup = document.getElementById("wrong-answer-popup");
+    popup.style.display = "block";
+}
+
+function closePopup() {
+    const popup = document.getElementById("wrong-answer-popup");
+    popup.style.display = "none";
+}
