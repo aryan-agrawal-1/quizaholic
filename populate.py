@@ -1,22 +1,35 @@
 import random
 import html
+import time
 import requests
 
 from django.core.management.base import BaseCommand
 from django.db import transaction
-
-from quiz.models import Category, Question, Answer
+from quiz.models import Category, Question, Answer, User, GameSession
 
 BASE_URL = "https://opentdb.com/api.php"
 CATEGORY_URL = "https://opentdb.com/api_category.php"
 
 class Command(BaseCommand):
+    help = 'Populates the database with quiz questions and demo users/game sessions.'
 
     def handle(self, *args, **options):
         api_categories = self.get_api_categories()
         if not api_categories:
             return
-        selected_categories = random.sample(api_categories, 8)
+
+        desired_categories = [
+            "Science & Nature",
+            "Science: Computers",
+            "Science: Mathematics",
+            "Mythology",
+            "Sports",
+            "Geography",
+            "History",
+            "Politics"
+        ]
+        selected_categories = [cat for cat in api_categories if cat['name'] in desired_categories]
+
         for cat in selected_categories:
             category_obj, _ = Category.objects.get_or_create(name=cat['name'])
             for difficulty in ['easy', 'medium', 'hard']:
@@ -34,6 +47,8 @@ class Command(BaseCommand):
                     continue
                 questions = data.get('results', [])
                 self.populate_questions(category_obj, questions)
+                time.sleep(5)
+        self.create_demo_users_and_gamesessions()
 
     def get_api_categories(self):
         response = requests.get(CATEGORY_URL)
@@ -66,3 +81,18 @@ class Command(BaseCommand):
                     answer_text=ans,
                     is_correct=False
                 )
+
+    def create_demo_users_and_gamesessions(self):
+        if User.objects.count() < 30:
+            for i in range(1, 31):
+                User.objects.get_or_create(username=f"User{i}", defaults={'streak': random.randint(0, 10)})
+        categories = list(Category.objects.all())
+        modes = ['basic', 'timed']
+        for user in User.objects.all():
+            category = random.choice(categories)
+            GameSession.objects.create(
+                user=user,
+                category=category,
+                mode=random.choice(modes),
+                score=random.randint(0, 1000)
+            )
