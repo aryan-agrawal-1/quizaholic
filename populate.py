@@ -11,7 +11,6 @@ BASE_URL = "https://opentdb.com/api.php"
 CATEGORY_URL = "https://opentdb.com/api_category.php"
 
 class Command(BaseCommand):
-    help = 'Populates the database with quiz questions and demo users/game sessions.'
 
     def handle(self, *args, **options):
         api_categories = self.get_api_categories()
