@@ -46,91 +46,49 @@ def leaderboard(request, category_slug):
     if request.user.is_authenticated:
         user_score_normal  = GameSession.objects.filter(mode = "normal", category=category , user = request.user )
         user_score_timed = GameSession.objects.filter(mode = "timed", category=category , user = request.user )
-
+        best_score_normal = user_score_normal.order_by('-score').first()
+        best_score_timed = user_score_timed.order_by('-score').first()
 
     context_dict['category'] = category
     context_dict['normal'] = leaderboard_entry_normal
     context_dict['timed'] = leaderboard_entry_timed
     context_dict['score'] = scores
-    context_dict['user_score_normal'] = user_score_normal
-    context_dict['user_score_timed'] = user_score_timed
+    context_dict['user_score_normal'] = best_score_normal
+    context_dict['user_score_timed'] = best_score_timed
 
     return render(request, 'quiz/leaderboards.html', context = context_dict)
 
 
-# def fetch_question(request, category_slug, mode, question_id): 
-#     context_dict = {}
-#     category = get_object_or_404(Category, slug=category_slug)
-#     question_text = get_object_or_404(Question, category = category, id = question_id)
-#     answers = question_text.get_answer()
-
-#     mode_templates = { 'learn': 'quiz/learn.html', 'normal': 'quiz/play.html', 'timed':'quiz/timed.html'}
-#     template = mode_templates.get(mode,'quiz/play.html')
-#     form = AnswerForm(answers=answers)
-#     if request.method == "POST":
-#         form = AnswerForm(request.POST, answers = answers)
-#         if form.is_valid():
-#             selected_answer = form.cleaned_data['answer']
-#             for a in answers:
-#                 if a['is_correct'] == True:
-#                     request.session['score'] = request.session.get('score',0) + question_text.score
-#                     break
-        
-#         next_question = Question.objects.filter(category = category).first()
-
-#         if next_question:
-#             return redirect( 'quiz:fetch_question', category_slug = category_slug, mode = mode, question_id = next_question.id )
-#         else:
-#             return redirect('quiz:category', category_slug = category_slug)
-        
-#     context_dict['category'] = category
-#     context_dict['question'] = question_text
-#     context_dict['answers'] = answers
-#     context_dict['mode'] = mode 
-#     return render(request, template, context = context_dict)
-
-
-def fetch_question(request, category_slug, mode, question_id):
+def fetch_question(request, category_slug, mode, question_id): 
     context_dict = {}
     category = get_object_or_404(Category, slug=category_slug)
-    question_text = get_object_or_404(Question, category=category, id=question_id)
+    question_text = get_object_or_404(Question, category = category, id = question_id)
     answers = question_text.get_answer()
-    request.session.setdefault('score', 0)
 
-    mode_templates = {'learn': 'quiz/learn.html', 'normal': 'quiz/play.html', 'timed': 'quiz/timed.html'}
-    template = mode_templates.get(mode, 'quiz/play.html')
-
+    mode_templates = { 'learn': 'quiz/learn.html', 'normal': 'quiz/play.html', 'timed':'quiz/timed.html'}
+    template = mode_templates.get(mode,'quiz/play.html')
     form = AnswerForm(answers=answers)
-
     if request.method == "POST":
-        form = AnswerForm(request.POST, answers=answers)
+        form = AnswerForm(request.POST, answers = answers)
         if form.is_valid():
             selected_answer = form.cleaned_data['answer']
-            correct_answer_found = False
             for a in answers:
-                if a['is_correct']:
-                    if a['id'] == int(selected_answer):
-                        request.session['score'] += question_text.score
-                        messages.success(request, "Correct! You've earned points.")
-                    else:
-                        messages.error(request, "Incorrect answer. Try the next question.")
-                    correct_answer_found = True
+                if a['is_correct'] == True:
+                    request.session['score'] = request.session.get('score',0) + question_text.score
                     break
-
-        next_question = Question.objects.filter(category=category, id__gt=question_id).order_by('id').first()
+        
+        next_question = Question.objects.filter(category = category).first()
 
         if next_question:
-            return redirect('quiz:fetch_question', category_slug=category_slug, mode=mode, question_id=next_question.id)
+            return redirect( 'quiz:fetch_question', category_slug = category_slug, mode = mode, question_id = next_question.id )
         else:
-            messages.info(request, f"You've completed the quiz! Final score: {request.session['score']}")
-            return redirect('quiz:category', category_slug=category_slug)
-
+            return redirect('quiz:category', category_slug = category_slug)
+        
     context_dict['category'] = category
     context_dict['question'] = question_text
     context_dict['answers'] = answers
-    context_dict['mode'] = mode
-    context_dict['form'] = form
-    return render(request, template, context=context_dict)
+    context_dict['mode'] = mode 
+    return render(request, template, context = context_dict)
 
 
 def register(request):

@@ -35,8 +35,8 @@ Leaderboards - {{ category.name }}
                     {% if user.is_authenticated %}
                     <tr class = "userScore">
                         <th><img src="{{ user.userprofile.profile_picture.url }}" alt="Profile Picture" onerror="this.src='/media/profile_pics/default.png';"> {{ user.username }}</th>
-                        {% if user_score_timed %} 
-                        <th>user_score_timed.score</th>
+                        {% if user_score_normal %} 
+                        <th>{{ user_score_normal.score }}</th>
                         {% else %}
                         <th>0</th>
                         {% endif %}
@@ -65,8 +65,8 @@ Leaderboards - {{ category.name }}
                 {% if user.is_authenticated %}
                 <tr class = "userScore">
                     <th><img src="{{ user.userprofile.profile_picture.url }}" alt="Profile Picture" onerror="this.src='/media/profile_pics/default.png';"> {{ user.username }}</th>
-                    {% if user_score_normal %} 
-                    <th>user_score_normal.score</th>
+                    {% if user_score_timed %} 
+                    <th>{{ user_score_timed.score }}</th>
                     {% else %}
                     <th>0</th>
                     {% endif %}
