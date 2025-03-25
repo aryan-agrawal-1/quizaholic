@@ -2,6 +2,7 @@ from django.db import models
 import random
 from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
+from datetime import datetime, timedelta
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -76,6 +77,27 @@ class GameSession(models.Model):
     mode = models.CharField(max_length=30)
     score = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
+
+    def save(self, *args, **kwargs):
+        # Get user's latest game session before this one
+        
+        last_session = GameSession.objects.filter(user=self.user).order_by('-created_at').first()
+        
+        if last_session:
+            # Check if last session was yesterday
+            yesterday = datetime.now().date() - timedelta(days=1)
+            if last_session.created_at.date() == yesterday:
+                # Increment streak if played yesterday
+                self.user.userprofile.streak += 1
+            else:
+                # Reset streak if not played yesterday
+                self.user.userprofile.streak = 1
+        else:
+            # First game session
+            self.user.userprofile.streak = 1
+            
+        self.user.userprofile.save()
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.user.username} - {self.category.name} ({self.mode}) - {self.score}"
