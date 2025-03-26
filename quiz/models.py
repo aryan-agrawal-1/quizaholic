@@ -27,6 +27,22 @@ class Category(models.Model):
             self.slug = slugify(self.name)
         super().save(*args, **kwargs)
 
+class Quiz(models.Model):
+    title = models.CharField(max_length=200)
+    description = models.TextField(blank=True, null=True)
+    creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='created_quizzes')
+    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, related_name='quizzes')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    slug = models.SlugField(unique=True)
+
+    def save(self, *args, **kwargs):
+        self.save = slugify(self.name)
+        super(Quiz, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return self.title
+
 
 class Question(models.Model):
     DIFFICULTY_CHOICES = [
@@ -38,7 +54,7 @@ class Question(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     question_text = models.CharField(max_length=999)
     score = models.IntegerField(default=0)
-    difficulty = models.CharField(null=True,max_length=10, choices=DIFFICULTY_CHOICES)
+    difficulty = models.CharField(max_length=10, choices=DIFFICULTY_CHOICES)
 
     def __str__(self):
         return self.question_text[:50]
@@ -48,7 +64,7 @@ class Question(models.Model):
         data = []
         random.shuffle(answers)
         for answer in answers:
-            data.append({'answer' : answer.answer_text, 'is_correct': answer.is_correct})
+            data.append({'answer_text' : answer.answer_text, 'is_correct': answer.is_correct})
         return data
 
     def save(self, *args, **kwargs):
@@ -101,3 +117,4 @@ class GameSession(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.category.name} ({self.mode}) - {self.score}"
+

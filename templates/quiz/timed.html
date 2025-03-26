@@ -14,7 +14,6 @@
                 <div class="progress">
                 </div>
             </div>
-            <span id= "question-number"> xx/x</span>
         </div>    
         {%if question %}
         <form id="timedQuestionForm" method = "POST">
@@ -23,7 +22,7 @@
             <div class="options">
                 {{form.answers}}
                 {% for answer in answers %}
-                <button type = "submit" class="option" name = "answers" value="{{ answer.answer_text }}">{{ answer.answer }}</button>
+                <button type = "submit" class="option" name = "answers" value="{{ answer.answer_text }}">{{ answer.answer_text }}</button>
                 {% endfor %}
             </div>
         </form>

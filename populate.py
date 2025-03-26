@@ -95,6 +95,7 @@ class Command(BaseCommand):
                 question_text=question_text,
                 difficulty= difficulty,
             )
+            print(f"Added Question: {question_obj.question_text} | ID: {question_obj.id}")
             Answer.objects.create(
                 question=question_obj,
                 answer_text=correct_answer,

@@ -1,14 +1,13 @@
 from django import forms
 from django.contrib.auth.models import User
 from .models import *
+from quiz.models import UserProfile
 
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
-    email = forms.EmailField(widget=forms.EmailInput())
     class Meta:
         model = User
         fields = ('username', 'email', 'password',)
-        exclude = ('category',)
         help_texts = {
             'username': None,
         }
@@ -31,7 +30,7 @@ class AddCategoryForm(forms.ModelForm):
     def save(self, user, commit=True):
         category = super().save(commit=False)
         category.slug = slugify(self.cleaned_data['name'])
-        category.created_by = user  # Set the current user
+        category.created_by = user 
 
         if commit:
             category.save()
@@ -52,10 +51,16 @@ class AddQuestionForm(forms.Form):
         self.fields['option3'].label = "Option 3"
         self.fields['option4'].label = "Option 4"
 
+    class Meta:
+        model = Question
+        fields = ('question_text', 'category', 'score', 'difficulty')
+
 class AnswerForm(forms.Form):
     answers = forms.ChoiceField(widget=forms.RadioSelect, choices= [], required = True)
 
-    def __init__(self, *args, answers =None, **kwargs):
+    def __init__(self,answers, *args,  **kwargs):
         super().__init__(*args, **kwargs)
         if answers:
-            self.fields['answers'].choices = [(a['answer'], a['answer']) for a in answers]
+            self.fields['answers'].choices = [(a['answer_text'], a['answer_text']) for a in answers]
+
+

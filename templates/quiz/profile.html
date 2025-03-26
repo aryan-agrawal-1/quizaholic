@@ -24,7 +24,6 @@ Profile
 
    <div class="categories-grid"> 
 
-        <!-- Something like this here -->
         {% if categories %}
             {% for category in categories %}
             <a href="{% url 'quiz:add_question' category.slug %}">

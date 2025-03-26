@@ -9,16 +9,16 @@
 <main>
     <div class="holder">
         <h2>{{ category.name }}</h2>
+
         <label>Choose a game mode or view the leaderboards</label>
         <label>Learn Mode : Answer questions with no points until you get bored</label>
         <label>Normal Mode : Answer questions with points until you get one wrong</label>
         <label>Timed Mode : Answer as many questions as you can in 45 seconds </label>
 
         <div>
-            <!-- Change the urls here -->
-            <a href="{% url 'quiz:fetch_question' category.slug 'learn' first_question.id %}"><button>Learn Mode</button></a>
-            <a href="{% url 'quiz:fetch_question' category.slug 'normal' first_question.id %}"><button>Normal Mode</button></a>
-            <a href="{% url 'quiz:fetch_question' category.slug 'timed' first_question.id %}"><button>Timed Mode</button></a>
+            <a href="{% url 'quiz:fetch_question' category.slug 'learn' first_question %}"><button>Learn Mode</button></a>
+            <a href="{% url 'quiz:fetch_question' category.slug 'normal' first_question %}"><button>Normal Mode</button></a>
+            <a href="{% url 'quiz:fetch_question' category.slug 'timed' first_question %}"><button>Timed Mode</button></a>
             <a href="{% url 'quiz:leaderboard' category.slug %}"><button>Leaderboards</button></a>
         </div>
     </div>

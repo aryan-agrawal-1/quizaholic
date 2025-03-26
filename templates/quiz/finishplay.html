@@ -1,0 +1,19 @@
+{% extends 'quiz/second_base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+Home
+{% endblock %}
+
+{% block main_body_block %}
+<main>    
+    <div class="holder">
+        <h1>Quizaholic</h1>
+        <label>Wrong Answer Selected, go back to Categories!</label>
+        <h1>Quiz Over!</h1>
+        <p>Your final score: {{ score }}</p>
+        <!-- Change url here -->
+        <a href ="{% url 'quiz:categories' %}"><button>Go to Categories</button></a>
+    </div>
+</main>
+{% endblock %}
