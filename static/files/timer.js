@@ -8,6 +8,7 @@ function startTimer() {
     
     setTimeout(() => {
         document.getElementById('timedQuestionForm').submit();
+        window.location.href= "finishplay.html"
     }, 5000);// 5secons change how long here
 }
 // Start the timer when the page loads
