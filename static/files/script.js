@@ -23,4 +23,7 @@ document.addEventListener('DOMContentLoaded', function() {
     offScreenMenu.querySelectorAll('a').forEach(item => {
         item.addEventListener('click', toggleMenu);
     });
+
 });
+
+
