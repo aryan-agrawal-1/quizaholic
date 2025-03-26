@@ -1,17 +1,9 @@
-{% extends 'quiz/base.html' %}
+{% extends 'quiz/second_base.html' %}
 {% load staticfiles %}
 
 {% block title_block %}
-Home
+Categories
 {% endblock %}
-
-{% block auth_buttons_block %}
-<div class = "auth_buttons">
-    <a href = "login.html"> <button>Login</button></a>
-    <a href = "register.html"> <button>Register</button></a>
-</div>
-{% endblock %}
-
 
 {% block main_body_block %}
 <main class = "categories">
@@ -20,17 +12,16 @@ Home
         <h1>Categories</h1> 
         <p>Pick a category and put your knowledge to the test - there's something for everyone!</p>
     </div>
-
-
-
+    
    <div class="categories-grid">
 
     {% if categories %}
-        {% for c in categories %}
-        <a href= "{%url 'quiz:category' c.slug %}">
+        {% for category in categories %}
+        <!-- Use urls here + varibles here -->
+        <a href="{% url 'quiz:category' category.slug %}">
             <div class="category_container">
-                <img src="gk.jpg" alt="Category">
-                <label>{{ c.name }}</label>
+                <img src="{{ category.category_image.url }}" alt="Category" onerror="this.src='/media/category_imgs/default.jpg';">
+                <label>{{ category.name }}</label>
             </div>
         </a>
         {% endfor %}
@@ -38,7 +29,6 @@ Home
         <li><strong>There are no categories present.</strong></li>
     {% endif %}
 
-    
     </div>
 </main>
 {% endblock %}

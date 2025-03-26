@@ -1,64 +1,23 @@
-<!DOCTYPE html>
+{% extends 'quiz/second_base.html' %}
+{% load staticfiles %}
 
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">    
-        <title>
-            Quizhaholic
-        </title>
-        <link rel="stylesheet" href="styles.css">
-    </head>
-    <body>
+{% block title_block %}
+AddCategory
+{% endblock %}
 
-        <header>
-            <div class="header-left-group">
-                <div class="logo">
-                    <h1><a href="index.html"><img src="">Quizhaholic</a></h1>
-                </div>
-                <nav class="nav_links">
-                    <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="categories.html">Categories</a></li>
-                        <li><a href="profile.html">Profile</a></li>
-                    </ul>
-                </nav>
-            </div>
+{% block main_body_block %}
+<main>
+    <div class="quiz-container">
+        <h1>Add Category</h1>
+        <h3> Create your category here! </h3>
 
-            <div class = "auth_buttons">
-                    <a href = "login.html"> <button>Login</button></a>
-                    <a href = "register.html"> <button>Register</button></a>
-            </div>
+        <form id="add_category_form" method="post" action="{% url 'quiz:add_category' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.as_p }}
 
-            <button class="burger-menu">☰</button>
+            <input type="submit" value="Make Category" />
+        </form>
+    </div>
+</main>
 
-        </header>
-
-        <main>
-            <div class="quiz-container">
-                <h1>Add Category</h1>
-                <h3> Create your category here! </h3>
-
-                <form id="add_category_form" method="post" action="{%  %}">
-                    <label>New Category Name :</label>
-                    <br>
-                    <input type="text" name="new-category" value="" size="50" />
-                    
-                    <input type="submit" value="Make Category" />
-                </form>
-            </div>
-            
-        </main>
-
-
-            <footer>
-            <nav class = "nav_links"> 
-                <ul>
-                    <li><a href = "index.html">Home</a></li>
-                    <li><a href = "categories.html">Categories</a></li>
-                    <li><a href = "profile.html">Profile</a></li>
-                </ul>
-            </nav>
-            </footer>
-    </body>
-</html>
+{% endblock %}

@@ -19,8 +19,8 @@ header {
     background-color: #ccc;
     padding: 25px 20px;
     outline: 2px solid black;
-    width: 100%;
-
+    width:auto;
+    min-width: 100vw;
 }
 
 .header-left-group {
@@ -29,15 +29,14 @@ header {
     gap: 30px; 
 }
 
- .logo h1 {
-    font-size: 30px;
-    margin: 0;
+ .logo h1, .container h1{
     font-family:"Courier New", monospace;
+    margin: 0;
+    font-size: 30px;
     line-height: 1;
 } 
 
-
-.logo a {
+.logo a, footer a {
     text-decoration: none;
     color: black;
 }
@@ -45,11 +44,9 @@ header {
 .logo img{
     width:30px;
     height:30px;
+    border-radius: 8px;
     align-items: center;
-    border-radius: 8px;
     padding-right: 10px;
-    border-radius: 8px;
-
 }
 
 .nav_links{
@@ -144,6 +141,7 @@ header {
 .auth_buttons {
     display: flex;
     gap: 10px;
+    margin-right: 25px;
 }
 
 
@@ -160,17 +158,6 @@ header {
 
 .off-screen-menu button {
     margin-top: 10px;
-}
-
-.off-screen-menu img{
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    border: 1px solid #ddd;
-    display: flex;
-    object-fit: cover;
-    outline:auto;
-
 }
 
 .auth_buttons .message {
@@ -199,8 +186,8 @@ header {
 
 main {
     display: flex;
-    flex-direction: column; /* Stack items vertically */
-    justify-content: flex-start; /* Align content at the top */
+    flex-direction: column; 
+    justify-content: flex-start; 
     align-items: center;
     width: 100%;
     min-height: 85vh;
@@ -217,7 +204,7 @@ main a{
     padding: 30px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     width: 60%;
-    min-height: 400px; /* Adjust height dynamically */
+    min-height: 400px; 
     border-radius: 10px;
     display: flex;
     flex-direction: column;
@@ -379,12 +366,25 @@ main a{
     background-color: #2E8BC0;
 }
 
+/* Add New Question Page */
+
+#finishbutton {
+    float:left;
+    border: 2px solid #2E8BC0;
+    background: #ccc;
+    border-radius: 2px;
+    font-size: 20px;
+    transition: 0.3s;
+    cursor: pointer;
+    width: 70px;
+    text-align: left;
+}
+
+
 /* Center Profile Section */
 .container {
     text-align: center;
     margin-bottom: 20px;
-    
-
 }
 
 .container h1 {
@@ -401,7 +401,6 @@ main a{
     border-radius: 50%;
 }
 
-/* Fix Quiz Heading */
 .quiz_heading {
     text-align: center;
     margin-bottom: 15px;
@@ -426,12 +425,12 @@ main a{
 .leaderboards_container {
     padding: 0px;
     display: flex;
-    flex-wrap: wrap; /* Allows items to wrap on small screens */
+    flex-wrap: wrap; 
     flex-direction: row;
     width: 100%;
     max-width: 1000px;
     min-height: auto;
-    justify-content: center; /* Center items */
+    justify-content: center;
     gap: 20px;
     background-color: #ccc;
     padding-bottom: 50px;
@@ -439,8 +438,8 @@ main a{
 }
 
 .lbNormal, .lbTimed {
-    width: 100%; /* Default full width */
-    max-width: 450px; /* Prevent it from stretching too much */
+    width: 100%; 
+    max-width: 450px; 
     text-align: center;
     
 }
@@ -451,16 +450,15 @@ main a{
     background-color: #ffffff;
     outline: auto;
     overflow-y: scroll;
-    height: 500px; /* Adjusted height */
+    height: 500px; 
 }
 
-/* Make table scrollable if needed */
 .lbTable {
     background-color: white;
     width: 100%;
     max-width: 400px;
     outline: auto;
-    overflow-x: auto; /* Allows horizontal scroll */
+    overflow-x: auto; 
 }
 
 th, td {
@@ -476,6 +474,7 @@ tr:hover{
 .lbTable img {
     width: 20px;
     height: 20px;
+    border-radius: 8px;
     align-items: center;
 }
 
@@ -488,7 +487,7 @@ img:hover{
 .quiz-container {
 
     width: 60%;
-    min-height: 400px; /* Adjust height dynamically */
+    min-height: 400px; 
     background: white;
     width: 60%;
     margin: 40px auto;
@@ -521,37 +520,6 @@ img:hover{
     transition: width 1s linear;
 }
 
-/* Question */
-.question {
-    margin-top: 40px;
-    font-size: 1.2em;
-    margin-bottom: 20px;
-}
-
-/* Options */
-.options {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
-    margin-top: 100px;
-
-}
-
-.option {
-    height:80px;
-    padding: 10px;
-    border: 2px solid #2E8BC0;
-    background: white;
-    border-radius: 10px;
-    font-size: 1em;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.option:hover {
-    background: #2E8BC0;
-    color: white;
-}
 
 /* Score */
 .score {
@@ -570,7 +538,7 @@ form label {
     float:left;
 }
 
-input[type=text],input[type=password] {
+input[type=text],input[type=password],select ,input[type=email]{
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
@@ -596,8 +564,46 @@ input[type=submit] {
   input[type=submit]:hover {
     background: #2E8BC0;
     color: white;
-  }
+  } 
   
+
+  #user_form li ,#add_category_form li {
+    color:red;
+  }
+
+/* Question */
+.question {
+    margin-top: 40px;
+    font-size: 1.2em;
+    margin-bottom: 20px;
+}
+
+/* Options */
+.options {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-top: 100px;
+    width:100%;
+
+}
+
+.option {
+    height:80px;
+    padding: 10px;
+    border: 2px solid #2E8BC0;
+    width:100%;
+    background: white;
+    border-radius: 10px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.option:hover {
+    background: #2E8BC0;
+    color: white;
+}
 
 /* Footer Styling */
 footer {
@@ -606,6 +612,9 @@ footer {
     bottom:  0;
     width: 100%;
     outline: 2px solid rgb(0, 0, 0);
+    width:auto;
+    min-width: 100vw;
+
 
 }
 
@@ -645,10 +654,11 @@ footer a {
         gap: 20px;
     }
 
-    
+
     .burger-menu {
         display: block; 
         order: 2; 
+        margin-right: 20px;
     }
 
     .container {
@@ -670,7 +680,6 @@ footer a {
 
     .lbNormal, .lbTimed {
         width: 90%; 
-        max-width: 100%; 
         justify-content: center;
         align-items: center;
     }
@@ -683,8 +692,17 @@ footer a {
     .lbTable img {
         width: 16px;
         height: 16px;
+        border-radius: 8px;
     }
 
+    .options {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+    
+    }
+    .holder h2 {
+        font-size: 29px;
+    }
 }
 
 @media (min-width: 901px) {
@@ -697,3 +715,13 @@ footer a {
     }
 }
 
+.img_demo {
+    width: 100px;
+    height: 100px;
+    border-radius: 100%;
+    outline:auto;
+}
+
+#pfplink {
+    color:#2E8BC0;
+}

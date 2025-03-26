@@ -1,67 +1,31 @@
-<!DOCTYPE html>
+{% extends 'quiz/base.html' %}
+{% load staticfiles %}
 
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">    
-        <title>
-            Quizhaholic
-        </title>
-        <link rel="stylesheet" href="styles.css">
-    </head>
-    <body>
+{% block title_block %}
+Login
+{% endblock %}
 
-        <header>
-            <div class="header-left-group">
-                <div class="logo">
-                    <h1><a href="index.html"><img src="">Quizhaholic</a></h1>
-                </div>
-                <nav class="nav_links">
-                    <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="categories.html">Categories</a></li>
-                        <li><a href="profile.html">Profile</a></li>
-                    </ul>
-                </nav>
-            </div>
+{% block main_body_block %}
+<main>
+    <div class="quiz-container">
+        <h1>Login</h1>
 
-            <div class = "auth_buttons" >
-                <a href = "login.html"> <button>Login</button></a>
-                <a href = "register.html"> <button>Register</button></a>
-            </div>
+        <h3> or <a href="{% url 'quiz:register' %}"><u>register</u></a> your account now! </h3>
 
-            <button class="burger-menu" id="burger-btn">☰</button>
-        </header>
-        
-        <main>
-            <div class="quiz-container">
-                <h1>Login</h1>
-                <h3> or <a href="register.html"><u>register</u></a> your account now! </h3>
+        <form id="login_form" method="post" action="{% url 'quiz:login' %}">
+            {% csrf_token %}
 
-                <form id="login_form" method="post" action="{%  %}">
-                    <label>User Name :</label>
-                    <br>
-                    <input type="text" name="username" value="" size="50" />
-                    <br />
-                    <label>Password :</label>
-                    <br>
-                    <input type="password" name="password" value="" size="50" />
-                    <br />
-                    <input type="submit" value="Login" />
-                </form>
+            <label>User Name :</label>
+            <br>
+            <input type="text" name="username" value="" size="50" />
+            <br />
+            <label>Password :</label>
+            <br>
+            <input type="password" name="password" value="" size="50" />
+            <br />
+            <input type="submit" value="Login" />
+        </form>
+    </div>
+</main>
 
-            </div>
-        </main>
-
-
-            <footer>
-            <nav class = "nav_links"> 
-                <ul>
-                    <li><a href = "index.html">Home</a></li>
-                    <li><a href = "categories.html">Categories</a></li>
-                    <li><a href = "profile.html">Profile</a></li>
-                </ul>
-            </nav>
-            </footer>
-    </body>
-</html>
+{% endblock %}

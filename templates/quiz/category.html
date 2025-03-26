@@ -1,68 +1,27 @@
-<!DOCTYPE html>
+{% extends 'quiz/second_base.html' %}
 {% load staticfiles %}
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">    
-        <title>
-            Quizhaholic
-        </title>
-        <link rel="stylesheet" href="{% static 'files/styles.css' %}">
-    </head>
-    <body>
 
-        <header>
-            <div class="header-left-group">
-                <div class="logo">
-                    <h1><a href="index.html"><img src="logo.png">Quizhaholic</a></h1>
-                </div>
-                <nav class="nav_links">
-                    <ul>
-                        <li><a href="{% url 'quiz:index' %}">Home</a></li>
-                        <li><a href="{% url 'quiz:categories' %}">Categories</a></li>
-                        <li><a href="{% url 'quiz:profile' %}">Profile</a></li>
-                    </ul>
-                </nav>
-            </div>
+{% block title_block %}
+{{ category.name }}
+{% endblock %}
 
-            <div class = "auth_buttons">
-                    <a href = "login.html"> <button>Login</button></a>
-                    <a href = "register.html"> <button>Register</button></a>
-            </div>
+{% block main_body_block %}
+<main>
+    <div class="holder">
+        <h2>{{ category.name }}</h2>
 
-            <button class="burger-menu">☰</button>
+        <label>Choose a game mode or view the leaderboards</label>
+        <label>Learn Mode : Answer questions with no points until you get bored</label>
+        <label>Normal Mode : Answer questions with points until you get one wrong</label>
+        <label>Timed Mode : Answer as many questions as you can in 45 seconds </label>
 
-        </header>
+        <div>
+            <a href="{% url 'quiz:fetch_question' category.slug 'learn' first_question %}"><button>Learn Mode</button></a>
+            <a href="{% url 'quiz:fetch_question' category.slug 'normal' first_question %}"><button>Normal Mode</button></a>
+            <a href="{% url 'quiz:fetch_question' category.slug 'timed' first_question %}"><button>Timed Mode</button></a>
+            <a href="{% url 'quiz:leaderboard' category.slug %}"><button>Leaderboards</button></a>
+        </div>
+    </div>
+</main>
 
-        <main>
-            <div class="holder">
-                <h2>{{category.slug}}</h2>
-                <label>Choose a game mode or view the leaderboards</label>
-                <label>Learn Mode : Answer questions with no points until you get bored</label>
-                <label>Normal Mode : Answer questions with points until you get one wrong</label>
-                <label>Timed Mode : Answer as many questions as you can in 45 seconds </label>
-
-                <div>
-                    {% if first_question %}
-                    <a href="{% url 'quiz:fetch_question' category.slug 'learn' first_question %}"><button>Learn Mode</button></a>
-                    <a href="{% url 'quiz:fetch_question' category.slug 'normal' first_question %}" ><button>Normal Mode</button></a>
-                    <a href="{% url 'quiz:fetch_question' category.slug 'timed' first_question %}"><button>Timed Mode</button></a>
-                    {% else %}
-                    <p>No questions available for this category.</p>
-                    {% endif %}
-                    <a href="{% url 'quiz:leaderboard' category.slug %}"><button>Leaderboards</button></a>
-                </div>
-            </div>
-        </main>
-
-            <footer>
-            <nav class = "nav_links"> 
-                <ul>
-                    <li><a href = "{% url 'quiz:index' %}">Home</a></li>
-                    <li><a href = "{% url 'quiz:categories' %} ">Categories</a></li>
-                    <li><a href = "{% url 'quiz:profile' %}">Profile</a></li>
-                </ul>
-            </nav>
-            </footer>
-    </body>
-</html>
+{% endblock %}

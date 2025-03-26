@@ -1,4 +1,3 @@
-
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import *
 from django.contrib.auth import login, logout, authenticate
@@ -9,8 +8,6 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from random import choice
 
-
-
 def index(request):
     return render(request, 'quiz/index.html')
 
@@ -18,22 +15,29 @@ def register(request):
     registered = False
     if request.method == 'POST':
         user_form = UserForm(request.POST)
-        if user_form.is_valid() and profile_form.is_valid():
-            user = user_form.save()
+        profile_form = UserProfileForm(request.POST, request.FILES)
 
+        if user_form.is_valid() and profile_form.is_valid():
+
+            user = user_form.save()
             user.set_password(user.password)
             user.save()
 
-            UserProfile.objects.create(user=user)
+            profile = profile_form.save(commit=False)
+            profile.user = user
+
+            if 'profile_picture' in request.FILES:
+                profile.profile_picture = request.FILES['profile_picture']
+            profile.streak = 0; 
+            profile.save()
             registered = True
         else:
-            print(user_form.errors)
-
+            print(user_form.errors, profile_form.errors)
     else:
         user_form = UserForm()
         profile_form = UserProfileForm()
 
-    return render(request, 'quiz/register.html', context= {'user_form' : user_form, 'profile_form' : profile_form, 'registered' : registered})
+    return render(request, 'quiz/register.html', {'user_form': user_form, 'profile_form': profile_form, 'registered': registered})
 
 
 def user_login(request):
@@ -52,8 +56,7 @@ def user_login(request):
             return HttpResponse("Invalid login details supplied.")
     else: 
         return render(request, 'quiz/login.html')
-    
-    
+
 @login_required
 def user_logout(request):
     logout(request)
@@ -75,11 +78,8 @@ def upload_profile_picture(request):
             return redirect('quiz:profile')
 
     else:
-        form = UserProfileForm(instance=user_profile)
-
-    return render(request, 'quiz/profile.html', {'form': form})
-
-
+        form = UserProfileForm()
+    return render(request, 'quiz/changepfp.html', {'form': form})
 
 #lists all the different catgeories avaliable
 def categories(request):
@@ -103,6 +103,31 @@ def category(request, category_slug):
     context_dict['mode'] = modes
     context_dict['first_question'] = first_question.id if first_question else None
     return render(request, 'quiz/category.html', context = context_dict)
+
+def leaderboard(request, category_slug):
+    context_dict = {} 
+    category = get_object_or_404(Category, slug=category_slug)
+    leaderboard_entry_normal = GameSession.objects.filter(mode= "normal", category=category)
+    leaderboard_entry_timed = GameSession.objects.filter(mode = "timed", category=category )
+
+    scores = GameSession.objects.filter(category=category).order_by("-score")
+
+    user_score_normal = None
+    user_score_timed = None
+    
+
+    if request.user.is_authenticated:
+        user_score_normal  = GameSession.objects.filter(mode = "normal", category=category , user = request.user ).order_by('-score').first()
+        user_score_timed = GameSession.objects.filter(mode = "timed", category=category , user = request.user ).order_by('-score').first()
+
+    context_dict['category'] = category
+    context_dict['normal'] = leaderboard_entry_normal
+    context_dict['timed'] = leaderboard_entry_timed
+    context_dict['score'] = scores
+    context_dict['user_score_normal'] = user_score_normal
+    context_dict['user_score_timed'] = user_score_timed
+
+    return render(request, 'quiz/leaderboards.html', context = context_dict)
 
 def fetch_question(request, category_slug, mode, question_id): 
     context_dict = {}
@@ -174,27 +199,25 @@ def leaderboard(request ,category_slug):
 
     return render(request, 'quiz/leaderboards.html', context = context_dict)
 
-
-
 @login_required
 def profile(request):
     categories = Category.objects.filter(created_by = request.user)
-    return render(request, 'quiz/profile.html', {categories: categories})
+    return render(request, 'quiz/profile.html', {'categories': categories})
 
 @login_required
 def add_category(request):
     form = AddCategoryForm()
 
     if request.method == 'POST':
-        form = AddCategoryForm(request.POST)
-
+        form = AddCategoryForm(request.POST, request.FILES)
+        
         if form.is_valid():
-            category = form.save(commit=True)
+            category = form.save(user = request.user)
             return redirect(reverse('quiz:add_question', kwargs={'category_name_slug': category.slug}))
         else:
             print(form.errors)
     
-    return render(request, 'quiz/add_category.html', {'form': form})
+    return render(request, 'quiz/add_category.html', {'form': form })
 
 @login_required
 def add_question(request, category_name_slug):
@@ -206,7 +229,7 @@ def add_question(request, category_name_slug):
     if category == None:
         return redirect('/quiz/')
     
-    form = AddCategoryForm()
+    form = AddQuestionForm()
 
     if request.method == 'POST':
         form = AddQuestionForm(request.POST)
@@ -243,11 +266,8 @@ def add_question(request, category_name_slug):
                 is_correct=False
             )
 
-            return redirect(request.path)
-        
+            return redirect('quiz:add_question', category_name_slug=category_name_slug)
         else:
             print(form.errors)
 
-    return render(request, 'quiz/add_question.html',  context={'form': form})
-
-
+    return render(request, 'quiz/add_question.html', {'form': form, 'category': category})

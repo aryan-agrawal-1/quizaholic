@@ -1,80 +1,30 @@
-<!DOCTYPE html>
+{% extends 'quiz/second_base.html' %}
+{% load staticfiles %}
 
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">    
-        <title>
-            Quizhaholic
-        </title>
-        <link rel="stylesheet" href="styles.css">
-    </head>
-    <body>
+{% block title_block %}
+AddCategory
+{% endblock %}
 
-        <header>
-            <div class="header-left-group">
-                <div class="logo">
-                    <h1><a href="index.html"><img src="">Quizhaholic</a></h1>
-                </div>
-                <nav class="nav_links">
-                    <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="categories.html">Categories</a></li>
-                        <li><a href="profile.html">Profile</a></li>
-                    </ul>
-                </nav>
-            </div>
+{% block main_body_block %}
+<main>
+    <div class="quiz-container">
+        
+        <!-- Change link here -->
+        <a href="{% url 'quiz:profile'%}"><button id ="finishbutton">Finish</button></a>
+        <br>
 
-            <div class = "auth_buttons">
-                    <a href = "login.html"> <button>Login</button></a>
-                    <a href = "register.html"> <button>Register</button></a>
-            </div>
+        <h1>Add Question</h1>
+        <h3> Enter your question here! </h3>
 
-            <button class="burger-menu">☰</button>
+        <!-- couldnt get the url here to work -->
+        <form id="add_question_form" method="post" action="{% url 'quiz:add_question' category.slug %}">
 
-        </header>
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Create Question" />
+        </form>
 
-        <main>
-            <div class="quiz-container">
-                <h1>Add Question</h1>
-                <h3> Enter your question here! </h3>
+    </div>
+</main>
 
-                <form id="add_question_form" method="post" action="{%  %}">
-                    <label>New Question :</label>
-                    <br>
-                    <input type="text" name="question" value="" size="50" />
-                    <br>
-                    <label>Option 1 (Correct Option):</label>
-                    <br>
-                    <input type="text" name="correct_option" value="" size="50" />
-                    <br>
-                    <label> Option 2:</label>
-                    <br>
-                    <input type="text" name="option" value="" size="50" />
-                    <br>
-                    <label>Option 3 :</label>
-                    <br>
-                    <input type="text" name="option" value="" size="50" />
-                    <br>
-                    <label>Option 4 :</label>
-                    <br>
-                    <input type="text" name="option" value="" size="50" />
-                    <br>
-                    <input type="submit" value="Create Question" />
-                </form>
-
-            </div>
-        </main>
-
-
-            <footer>
-            <nav class = "nav_links"> 
-                <ul>
-                    <li><a href = "index.html">Home</a></li>
-                    <li><a href = "categories.html">Categories</a></li>
-                    <li><a href = "profile.html">Profile</a></li>
-                </ul>
-            </nav>
-            </footer>
-    </body>
-</html>
+{% endblock %}
