@@ -3,15 +3,12 @@ let progress = 0;
 let progressBar = document.querySelector(".progress");
 
 function startTimer() {
-    let timer = setInterval(() => {
-        if (progress < 100) {
-            progress += 50;
-            progressBar.style.width = progress + "%";
-        } else {
-            clearInterval(timer);
-        }
-    }, 1000);
+    progressBar.style.transition = "width 5s ease";
+    progressBar.style.width = "100%";
+    
+    setTimeout(() => {
+        document.getElementById('timedQuestionForm').submit();
+    }, 5000);// 5secons change how long here
 }
-
 // Start the timer when the page loads
 window.onload = startTimer;

@@ -26,12 +26,4 @@ document.addEventListener('DOMContentLoaded', function() {
 
 });
 
-function showWrongAnswerPopup() {
-    const popup = document.getElementById("wrong-answer-popup");
-    popup.style.display = "block";
-}
 
-function closePopup() {
-    const popup = document.getElementById("wrong-answer-popup");
-    popup.style.display = "none";
-}

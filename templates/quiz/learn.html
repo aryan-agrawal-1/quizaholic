@@ -41,14 +41,14 @@
                         <form method = "POST">
                             {% csrf_token %}
                             <div class="timer-container">
-                                <span id= "question-number"> xx/x</span>
+                                
                             </div>
                             <h2 class="question">{{question.question_text}}</h2> 
                             <div class="options">
                                 {{form.answers}}
                             </div>
                             {% for answer in answers %}
-                            <button type = "submit" name = "answers" value="{{ answer.answer_text }}">{{ answer.answer_text }}</button>
+                            <button class="option" type = "submit" name = "answers" value="{{ answer.answer_text }}">{{ answer.answer_text }}</button>
                             {% endfor %}
                         </form>
                     {% else %}

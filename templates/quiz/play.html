@@ -34,20 +34,6 @@
             <button class="burger-menu">☰</button>
 
         </header>
-
-        <div id="wrong-answer-popup" class="wrong-answer-popup">
-            <p>Oops! That answer is incorrect.</p>
-            <a href="{% url 'quiz:categories' %}"><button >Go Back to Categories</button></a>
-            <button onclick="closePopup()">Close</button>
-        </div>
-        
-        {% if is_wrong %}
-            <script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    showWrongAnswerPopup();
-                });
-            </script>
-        {% endif %}
         
         <main>
             <div class="quiz-container">
@@ -55,20 +41,20 @@
                 <form method = "POST">
                     {% csrf_token %}
                     <div class="timer-container">
-                        <span id= "question-number"> xx/x</span>
+                        
                     <h2 id="question">{{question.question_text}}</h2>
                     </div>
                     <div class="options">
                         {{form.answers}}
                     </div>
                     {% for answer in answers %}
-                    <button type = "submit" name = "answers" value="{{ answer.answer_text }}">{{ answer.answer_text }}</button>
+                    <button class="option" type = "submit" name = "answers" value="{{ answer.answer_text }}">{{ answer.answer_text }}</button>
                     {% endfor %}
                 </form>
             {% else %}
             <p> No questions avaliable, </p>
             {% endif %}
-            </div>
+            </script>
         </main>
 
 
