@@ -9,11 +9,12 @@
 <main>
     <div class="holder">
         <h2>{{ category.name }}</h2>
-
+        
+        <!-- Maybe change these -->
         <label>Choose a game mode or view the leaderboards</label>
         <label>Learn Mode : Answer questions with no points until you get bored</label>
         <label>Normal Mode : Answer questions with points until you get one wrong</label>
-        <label>Timed Mode : Answer as many questions as you can in 45 seconds </label>
+        <label>Timed Mode :  </label>
 
         <div>
             <a href="{% url 'quiz:fetch_question' category.slug 'learn' first_question %}"><button>Learn Mode</button></a>

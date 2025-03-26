@@ -13,6 +13,7 @@
                 {% csrf_token %}
                 <h2 class="question">{{question.question_text}}</h2> 
                 <div class="options">
+                {{form.answers}}
                 {% for answer in answers %}
                 <button type = "submit" class="option" name = "answers" value="{{ answer.answer_text }}">{{ answer.answer_text }}</button>
                 {% endfor %}

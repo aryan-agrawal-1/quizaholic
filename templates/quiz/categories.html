@@ -17,7 +17,6 @@ Categories
 
     {% if categories %}
         {% for category in categories %}
-        <!-- Use urls here + varibles here -->
         <a href="{% url 'quiz:category' category.slug %}">
             <div class="category_container">
                 <img src="{{ category.category_image.url }}" alt="Category" onerror="this.src='/media/category_imgs/default.jpg';">

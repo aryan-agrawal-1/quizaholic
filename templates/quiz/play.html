@@ -15,6 +15,7 @@
             <h2 id="question">{{question.question_text}}</h2>
             </div>
             <div class="options">
+                {{form.answers}}
                 {% for answer in answers %}
                 <button type = "submit" class="option" name = "answers" value="{{ answer.answer_text }}">{{ answer.answer_text }}</button>
                 {% endfor %}
@@ -24,6 +25,5 @@
     <p> No questions avaliable, </p>
     {% endif %}
     </div>
-
 </main>
 {% endblock %}

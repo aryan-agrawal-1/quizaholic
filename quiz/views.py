@@ -107,15 +107,12 @@ def category(request, category_slug):
 def leaderboard(request, category_slug):
     context_dict = {} 
     category = get_object_or_404(Category, slug=category_slug)
-    leaderboard_entry_normal = GameSession.objects.filter(mode= "normal", category=category)
-    leaderboard_entry_timed = GameSession.objects.filter(mode = "timed", category=category )
-
-    scores = GameSession.objects.filter(category=category).order_by("-score")
+    leaderboard_entry_normal = GameSession.objects.filter(mode= "normal", category=category).order_by("-score")[:10]
+    leaderboard_entry_timed = GameSession.objects.filter(mode = "timed", category=category ).order_by("-score")[:10]
 
     user_score_normal = None
     user_score_timed = None
     
-
     if request.user.is_authenticated:
         user_score_normal  = GameSession.objects.filter(mode = "normal", category=category , user = request.user ).order_by('-score').first()
         user_score_timed = GameSession.objects.filter(mode = "timed", category=category , user = request.user ).order_by('-score').first()
@@ -123,7 +120,6 @@ def leaderboard(request, category_slug):
     context_dict['category'] = category
     context_dict['normal'] = leaderboard_entry_normal
     context_dict['timed'] = leaderboard_entry_timed
-    context_dict['score'] = scores
     context_dict['user_score_normal'] = user_score_normal
     context_dict['user_score_timed'] = user_score_timed
 
@@ -186,19 +182,6 @@ def finish_view(request):
     #score = game_session.score if game_session else 0    
     return render(request, 'quiz/finishplay.html')    
 
-
-def leaderboard(request ,category_slug):
-    context_dict = {} 
-    category = get_object_or_404(Category, slug = category_slug)
-    leaderboard_entry_normal = GameSession.objects.filter(mode= "normal", category=category).order_by("-score")[:10]
-    leaderboard_entry_timed = GameSession.objects.filter(mode = "timed", category=category ).order_by("-score")[:10]
-
-    context_dict['category'] = category
-    context_dict['normal'] = leaderboard_entry_normal
-    context_dict['timed'] = leaderboard_entry_timed
-
-    return render(request, 'quiz/leaderboards.html', context = context_dict)
-
 @login_required
 def profile(request):
     categories = Category.objects.filter(created_by = request.user)
@@ -237,7 +220,7 @@ def add_question(request, category_name_slug):
         if form.is_valid():
             question = Question(
                 category = category,
-                question_text = form.cleaned_data['question'],
+                question_text = form.cleaned_data['question_text'],
                 difficulty = form.cleaned_data['difficulty']
             )
             question.save()
