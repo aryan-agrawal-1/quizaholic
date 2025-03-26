@@ -34,10 +34,23 @@ class Command(BaseCommand):
             "History",
             "Vehicles"
         ]
+
+        category_img = [
+            "category_imgs/gk.jpg",
+            "category_imgs/sn.jpg",
+            "category_imgs/cs.jpeg",
+            "category_imgs/m.avif",
+            "category_imgs/sport.avif",
+            "category_imgs/g.jpg",
+            "category_imgs/history.webp",
+            "category_imgs/v.jpg"
+        ]
+
+
         selected_categories = [cat for cat in api_categories if cat['name'] in desired_categories]
 
-        for cat in selected_categories:
-            category_obj, _ = Category.objects.get_or_create(name=cat['name'])
+        for count, cat in enumerate(selected_categories):
+            category_obj, _ = Category.objects.get_or_create(name=cat['name'],category_image = category_img[count])
             for i in range(2):
                 params = {
                     'amount': 50,
@@ -59,6 +72,7 @@ class Command(BaseCommand):
                 print("done 1")
                 time.sleep(5)
         self.create_demo_users_and_gamesessions()
+        print('population done')
 
     def get_api_categories(self):
         response = requests.get(CATEGORY_URL)
@@ -73,12 +87,13 @@ class Command(BaseCommand):
             question_text = html.unescape(item.get('question'))
             correct_answer = html.unescape(item.get('correct_answer'))
             incorrect_answers = [html.unescape(ans) for ans in item.get('incorrect_answers', [])]
+            difficulty = html.unescape(item.get('difficulty'))
             if Question.objects.filter(category=category_obj, question_text=question_text).exists():
                 continue
             question_obj = Question.objects.create(
                 category=category_obj,
                 question_text=question_text,
-                score=0
+                difficulty= difficulty,
             )
             Answer.objects.create(
                 question=question_obj,

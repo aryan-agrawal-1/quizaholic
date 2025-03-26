@@ -6,6 +6,7 @@ from django.urls import reverse
 from .models import *
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+from random import choice
 
 
 def index(request):
@@ -42,19 +43,18 @@ def leaderboard(request, category_slug):
 
     user_score_normal = None
     user_score_timed = None
+    
 
     if request.user.is_authenticated:
-        user_score_normal  = GameSession.objects.filter(mode = "normal", category=category , user = request.user )
-        user_score_timed = GameSession.objects.filter(mode = "timed", category=category , user = request.user )
-        best_score_normal = user_score_normal.order_by('-score').first()
-        best_score_timed = user_score_timed.order_by('-score').first()
+        user_score_normal  = GameSession.objects.filter(mode = "normal", category=category , user = request.user ).order_by('-score').first()
+        user_score_timed = GameSession.objects.filter(mode = "timed", category=category , user = request.user ).order_by('-score').first()
 
     context_dict['category'] = category
     context_dict['normal'] = leaderboard_entry_normal
     context_dict['timed'] = leaderboard_entry_timed
     context_dict['score'] = scores
-    context_dict['user_score_normal'] = best_score_normal
-    context_dict['user_score_timed'] = best_score_timed
+    context_dict['user_score_normal'] = user_score_normal
+    context_dict['user_score_timed'] = user_score_timed
 
     return render(request, 'quiz/leaderboards.html', context = context_dict)
 
@@ -64,21 +64,29 @@ def fetch_question(request, category_slug, mode, question_id):
     category = get_object_or_404(Category, slug=category_slug)
     question_text = get_object_or_404(Question, category = category, id = question_id)
     answers = question_text.get_answer()
-
+    is_wrong = False
     mode_templates = { 'learn': 'quiz/learn.html', 'normal': 'quiz/play.html', 'timed':'quiz/timed.html'}
     template = mode_templates.get(mode,'quiz/play.html')
-    form = AnswerForm(answers=answers)
-    if request.method == "POST":
-        form = AnswerForm(request.POST, answers = answers)
-        if form.is_valid():
-            selected_answer = form.cleaned_data['answer']
-            for a in answers:
-                if a['is_correct'] == True:
-                    request.session['score'] = request.session.get('score',0) + question_text.score
-                    break
-        
-        next_question = Question.objects.filter(category = category).first()
+    form = AnswerForm(answers = answers)
+    value = question_text.score
 
+    if request.method == "POST":
+        form = AnswerForm(data = request.POST, answers = answers)
+        if form.is_valid():
+            selected_answer = form.cleaned_data['answers']
+            is_correct = False 
+            for a in answers:
+                if a['answer_text'] == selected_answer:
+                    if a['is_correct']:
+                        is_correct = True
+                        request.session['score'] = request.session.get('score',0) + question_text.score
+                        break
+                     
+            if not is_correct:
+                is_wrong = True    
+        question_id = Question.objects.filter(category=category).values_list('id', flat=True)
+        next_question= Question.objects.get(id=choice(question_id))
+    
         if next_question:
             return redirect( 'quiz:fetch_question', category_slug = category_slug, mode = mode, question_id = next_question.id )
         else:
@@ -88,6 +96,8 @@ def fetch_question(request, category_slug, mode, question_id):
     context_dict['question'] = question_text
     context_dict['answers'] = answers
     context_dict['mode'] = mode 
+    context_dict['value'] = value
+    context_dict[ 'is_wrong'] = is_wrong
     return render(request, template, context = context_dict)
 
 
@@ -156,7 +166,7 @@ def upload_profile_picture(request):
             return redirect('quiz:profile')
 
     else:
-        form = UserProfileForm(instance=user_profile)
+        form = UserProfileForm()
     return render(request, 'quiz/changepfp.html', {'form': form})
 
 @login_required

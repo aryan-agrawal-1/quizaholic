@@ -8,23 +8,22 @@
 {% block main_body_block %}
 <main>
     <div class="quiz-container">
-        <div class="timer-container">
-            <!-- How do I change the question number -->
-            <span id="question-number">1/xx</span>
-        </div>
-
-        <h2 class="question">{{ question.text }}</h2>
-
-        <form class = "options" method="post" id="question">
-            <button class="option" name = "optioncosen">{{ answer1 }}</button>
-            <button class="option" name = "optioncosen">{{ answer2 }}</button>
-            <button class="option" name = "optioncosen">{{ answer3 }}</button>
-            <button class="option" name = "optioncosen">{{ answer4 }}</button>
+        {%if question %}
+        <form method = "POST">
+            {% csrf_token %}
+            <div class="timer-container">
+                <span id= "question-number"> xx/x</span>
+            <h2 id="question">{{question.question_text}}</h2>
+            </div>
+            <div class="options">
+                {% for answer in answers %}
+                <button type = "submit" class="option" name = "answers" value="{{ answer.answer_text }}">{{ answer.answer }}</button>
+                {% endfor %}
+            </div>
         </form>
-
-        <!-- something like this?? here  -->
-        <p class="score">Score: <span id="score">{{ gamesession.user.score }}</span></p>
-
+    {% else %}
+    <p> No questions avaliable, </p>
+    {% endif %}
     </div>
 
 </main>

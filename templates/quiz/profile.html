@@ -10,6 +10,8 @@ Profile
 
     <div class="container">
         <h1><img src="{{ user.userprofile.profile_picture.url }}" alt="Profile Picture" onerror="this.src='/media/profile_pics/default.png';"> {{ user.username }} </h1> 
+        <p id="pfplink"><a href ="{% url 'quiz:upload_profile_picture' %} ">(Change profile picture from here)</a></p>
+
         {% if user.userprofile.streak and user.userprofile.streak != 0 %}
         <h1>(🔥 {{ user.userprofile.streak }}-Day Streak)</h1>
         {% endif %}

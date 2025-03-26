@@ -9,6 +9,9 @@ class UserForm(forms.ModelForm):
         model = User
         fields = ('username', 'email', 'password',)
         exclude = ('category',)
+        help_texts = {
+            'username': None,
+        }
 
 
 class UserProfileForm(forms.ModelForm):
@@ -42,7 +45,14 @@ class AddQuestionForm(forms.Form):
     option4 = forms.CharField(max_length=999)
     difficulty = forms.ChoiceField(choices=Question.DIFFICULTY_CHOICES, label="Difficulty")
 
-class AnswerForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(AddQuestionForm, self).__init__(*args, **kwargs)
+        self.fields['option1'].label = "Option 1 (Correct Option)"
+        self.fields['option2'].label = "Option 2"
+        self.fields['option3'].label = "Option 3"
+        self.fields['option4'].label = "Option 4"
+
+class AnswerForm(forms.Form):
     answers = forms.ChoiceField(widget=forms.RadioSelect, choices= [], required = True)
 
     def __init__(self, *args, answers =None, **kwargs):
