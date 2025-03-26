@@ -22,7 +22,7 @@
     <form method="post" action="." enctype="multipart/form-data">
         {% csrf_token %}
         
-        <!-- Username Field -->
+        <!-- Username -->
         <div class="form-group">
             <label for="id_username">Username:</label>
             <input type="text" name="username" id="id_username" class="form-control" placeholder="Enter your username">
@@ -31,7 +31,7 @@
             {% endif %}
         </div>
 
-        <!-- Email Field -->
+        <!-- Email -->
         <div class="form-group">
             <label for="id_email">Email:</label>
             <input type="email" name="email" id="id_email" class="form-control" placeholder="Enter your email">
@@ -40,7 +40,7 @@
             {% endif %}
         </div>
 
-        <!-- Password Field -->
+        <!-- Password -->
         <div class="form-group">
             <label for="id_password1">Password:</label>
             <input type="password" name="password1" id="id_password1" class="form-control" placeholder="Enter your password">
@@ -49,7 +49,7 @@
             {% endif %}
         </div>
 
-        <!-- Password Confirmation Field -->
+        <!-- Password Confirmation -->
         <div class="form-group">
             <label for="id_password2">Confirm Password:</label>
             <input type="password" name="password2" id="id_password2" class="form-control" placeholder="Confirm your password">
@@ -58,7 +58,7 @@
             {% endif %}
         </div>
 
-        <!-- Profile Picture Field -->
+        <!-- Profile Picture -->
         <div class="form-group">
             <label for="id_profile_picture">Profile Picture:</label>
             <input type="file" name="profile_picture" id="id_profile_picture" class="form-control">
