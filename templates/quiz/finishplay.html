@@ -2,7 +2,7 @@
 {% load staticfiles %}
 
 {% block title_block %}
-Home
+Game Over
 {% endblock %}
 
 {% block main_body_block %}
@@ -12,7 +12,6 @@ Home
         <label>Wrong Answer Selected, go back to Categories!</label>
         <h1>Quiz Over!</h1>
         <p>Your final score: {{ score }}</p>
-        <!-- Change url here -->
         <a href ="{% url 'quiz:categories' %}"><button>Go to Categories</button></a>
     </div>
 </main>

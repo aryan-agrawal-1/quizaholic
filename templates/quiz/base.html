@@ -18,7 +18,6 @@
             <div class="header-left-group">
                 <div class="logo">
 
-                    <!-- Change urls here -->
                     <h1><a href="{% url 'quiz:index' %}"><img src="{% static 'images/logo.png' %}">Quizhaholic</a></h1> 
                 </div>
                 <nav class="nav_links">
@@ -41,8 +40,6 @@
 
             <div class="off-screen-menu">
                 <ul>
-                    <!-- Change urls here -->
-
                     <li><a href="{% url 'quiz:index' %}">Home</a></li>
                     <li><a href="{% url 'quiz:categories' %}">Categories</a></li>
                     {% if user.is_authenticated %}
@@ -66,7 +63,6 @@
         <footer>
             <nav class = "nav_links"> 
                 <ul>
-                    <!-- Change all these links -->
                     <li><a href = "{% url 'quiz:index' %}">Home</a></li>
                     <li><a href = "{% url 'quiz:categories' %}">Categories</a></li>
                     {% if user.is_authenticated %}

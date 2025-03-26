@@ -9,14 +9,12 @@ AddCategory
 <main>
     <div class="quiz-container">
         
-        <!-- Change link here -->
         <a href="{% url 'quiz:profile'%}"><button id ="finishbutton">Finish</button></a>
         <br>
 
         <h1>Add Question</h1>
         <h3> Enter your question here! </h3>
 
-        <!-- couldnt get the url here to work -->
         <form id="add_question_form" method="post" action="{% url 'quiz:add_question' category.slug %}">
 
             {% csrf_token %}
