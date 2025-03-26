@@ -11,6 +11,9 @@ from django.contrib.auth.decorators import login_required
 def index(request):
     return render(request, 'quiz/index.html')
 
+def index(request):
+    return render(request, 'quiz/index.html')
+
 def register(request):
     registered = False
     if request.method == 'POST':
@@ -46,7 +49,7 @@ def user_login(request):
                 return HttpResponse("Your account is disabled.")  
         else:
             print(f"Invalid login details: {username}, {password}")
-            return HttpResponse("Invalid login details supplied.")
+            return HttpResponse("Invalid login details.")
     else: 
         return render(request, 'quiz/login.html')
     
@@ -73,5 +76,4 @@ def upload_profile_picture(request):
 
     else:
         form = UserProfileForm(instance=user_profile)
-
     return render(request, 'quiz/profile.html', {'form': form})

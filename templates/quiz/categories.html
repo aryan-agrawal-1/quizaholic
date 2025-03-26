@@ -1,28 +1,18 @@
-{% extends 'quiz/base.html' %}
+{% extends 'quiz/second_base.html' %}
 {% load staticfiles %}
 
 {% block title_block %}
-Home
+Categories
 {% endblock %}
 
-{% block auth_buttons_block %}
-<div class = "auth_buttons">
-    <a href = "login.html"> <button>Login</button></a>
-    <a href = "register.html"> <button>Register</button></a>
-</div>
-{% endblock %}
-
-
-{% block main_block %}
+{% block main_body_block %}
 <main class = "categories">
 
     <div class="container">
         <h1>Categories</h1> 
         <p>Pick a category and put your knowledge to the test - there's something for everyone!</p>
     </div>
-
-
-
+    
    <div class="categories-grid">
 
     {% if categories %}
@@ -39,38 +29,7 @@ Home
         <li><strong>There are no categories present.</strong></li>
     {% endif %}
 
-            <!-- Use for loop here + urls -->
-
-        <a href="category.html">
-            <div class="category_container">
-                <img src="gk.jpg" alt="Category">
-                <label>Category XX</label>
-            </div>
-        </a>
-        <a href="category.html">
-            <div class="category_container">
-                <img src="gk.jpg" alt="Category">
-                <label>Category XX</label>
-            </div>
-        </a>
-        <a href="category.html">
-            <div class="category_container">
-                <img src="gk.jpg" alt="Category">
-                <label>Category XX</label>
-            </div>
-        </a>
-        <a href="category.html">
-            <div class="category_container">
-                <img src="gk.jpg" alt="Category">
-                <label>Category XX</label>
-            </div>
-        </a>
-        <a href="category.html">
-            <div class="category_container">
-                <img src="gk.jpg" alt="Category">
-                <label>Category XX</label>
-            </div>
-        </a>
+        <!-- Remove this later on  -->
         <a href="category.html">
             <div class="category_container">
                 <img src="gk.jpg" alt="Category">

@@ -1,0 +1,76 @@
+{% extends 'quiz/base.html' %}
+{% block title_block %}
+    Register
+{% endblock %}
+
+{% block main_body_block %}
+<div class="registration-box">
+    <h1>Register</h1>
+    <p>or <a href="{% url 'quiz:login' %}">login</a> if you already have an account!</p>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert 
+                {% if message.tags == 'error' %}alert-danger{% elif message.tags == 'success' %}alert-success{% endif %} 
+                alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <form method="post" action="." enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        <!-- Username Field -->
+        <div class="form-group">
+            <label for="id_username">Username:</label>
+            <input type="text" name="username" id="id_username" class="form-control" placeholder="Enter your username">
+            {% if form.username.errors %}
+                <div class="error">{{ form.username.errors }}</div>
+            {% endif %}
+        </div>
+
+        <!-- Email Field -->
+        <div class="form-group">
+            <label for="id_email">Email:</label>
+            <input type="email" name="email" id="id_email" class="form-control" placeholder="Enter your email">
+            {% if form.email.errors %}
+                <div class="error">{{ form.email.errors }}</div>
+            {% endif %}
+        </div>
+
+        <!-- Password Field -->
+        <div class="form-group">
+            <label for="id_password1">Password:</label>
+            <input type="password" name="password1" id="id_password1" class="form-control" placeholder="Enter your password">
+            {% if form.password1.errors %}
+                <div class="error">{{ form.password1.errors }}</div>
+            {% endif %}
+        </div>
+
+        <!-- Password Confirmation Field -->
+        <div class="form-group">
+            <label for="id_password2">Confirm Password:</label>
+            <input type="password" name="password2" id="id_password2" class="form-control" placeholder="Confirm your password">
+            {% if form.password2.errors %}
+                <div class="error">{{ form.password2.errors }}</div>
+            {% endif %}
+        </div>
+
+        <!-- Profile Picture Field -->
+        <div class="form-group">
+            <label for="id_profile_picture">Profile Picture:</label>
+            <input type="file" name="profile_picture" id="id_profile_picture" class="form-control">
+            {% if form.profile_picture.errors %}
+                <div class="error">{{ form.profile_picture.errors }}</div>
+            {% endif %}
+        </div>
+
+        <!-- Submit Button -->
+        <div class="form-group">
+            <input type="submit" value="Register" class="btn btn-primary" />
+        </div>
+    </form>
+</div>
+{% endblock %}

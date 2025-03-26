@@ -1,115 +1,60 @@
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">    
-        <title>
-            Quizhaholic
-        </title>
-        <link rel="stylesheet" href="styles.css">
-    </head>
-    <body>
+{% extends 'quiz/second_base.html' %}
+{% load staticfiles %}
 
-        <header>
-            <div class="header-left-group">
-                <div class="logo">
-                    <h1><a href="index.html"><img src="logo.png">Quizhaholic</a></h1>
-                </div>
-                <nav class="nav_links">
-                    <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="categories.html">Categories</a></li>
-                        <li><a href="profile.html">Profile</a></li>
-                    </ul>
-                </nav>
+{% block title_block %}
+Leaderboards - {{ category.name }}
+{% endblock %}
+
+{% block main_body_block %}
+<main class="leaderboards">
+
+    <div class="container">
+        <h1> {{ category.name }} LeaderBoards </h1>
+        <p>Check the leaderboards where do you rank among the best?</p>
+    </div>
+
+   <div class="leaderboards_container">
+
+        <div class="lbNormal">
+            <h2><u>Classic</u></h2>
+            <div class = "lbNormal2">
+                <table class="lbTable">
+                    <tr><th>User</th><th>Score</th></tr>
+
+                    <!-- Use loop here for all users -->
+                    <tr><td><img src="{% static 'images/pfp.png' %}"> USer1</td><td>120</td></tr>
+                    
+                </table>
             </div>
+            <div>
+                <table class="lbTable">
+                    
+                    <!-- Something here -->
+                    <tr><td><img src="{% static 'images/pfp.png' %}"> {{ user.username }}</td><td>120</td></tr>
 
-            <div class = "auth_buttons">
-                    <a href = "login.html"> <button>Login</button></a>
-                    <a href = "register.html"> <button>Register</button></a>
+                </table>
             </div>
+        </div>
 
-            <button class="burger-menu">☰</button>
+        <div class="lbTimed">
+            <h2><u>Timed</u></h2>
+            <div class="lbTimed2">
+                <table class="lbTable">
+                    <tr><th>User</th><th>Score</th></tr>
 
-        </header>
+                    <!-- Use loop here for all users -->
+                    <tr><td><img src="{% static 'images/pfp.png' %}"> USer1</td><td>120</td></tr>
 
-        <main class="leaderboards">
+                </table>
+            </div>
+            <table class="lbTable">
 
-                <div class="container">
-                    <h1> Category LeaderBoards </h1>
-                    <p>Check the leaderboards where do you rank among the best?</p>
-                </div>
+                <!-- Something here -->
+                <tr class = "userScore"><th><img src="{% static 'images/pfp.png' %}"> {{ user.username }}</th><th>120</th></tr>
+            </table>
 
-               <div class="leaderboards_container">
-
-                    <div class="lbNormal">
-                        <h2><u>Classic</u></h2>
-                        <div class = "lbNormal2">
-                            <table class="lbTable">
-                                <tr><th>User</th><th>Score</th></tr>
-                                <tr><td><img src="pfp.png"> USer1</td><td>120</td></tr>
-                                <tr><td><img src="pfp.png"> USer1</td><td>120</td></tr>
-                                <tr><td><img src="pfp.png"> USer1</td><td>120</td></tr>
-                                <tr><td><img src="pfp.png"> USer1</td><td>120</td></tr>
-                                <tr><td><img src="pfp.png"> USer1</td><td>120</td></tr>
-                                <tr><td><img src="pfp.png"> USer1</td><td>120</td></tr>
-                                <tr><td><img src="pfp.png"> USer1</td><td>120</td></tr>
-                                <tr><td><img src="pfp.png"> USer1</td><td>120</td></tr>
-                                <tr><td><img src="pfp.png"> USer1</td><td>120</td></tr>
-                                <tr><td><img src="pfp.png"> USer1</td><td>120</td></tr>
-                                <tr><td><img src="pfp.png"> USer1</td><td>120</td></tr>
-                                <tr><td><img src="pfp.png"> USer1</td><td>120</td></tr>
-                                <tr><td><img src="pfp.png"> USer1</td><td>120</td></tr>
-                                <tr><td><img src="pfp.png"> USer1</td><td>120</td></tr>
-                                <tr><td><img src="pfp.png"> USer1</td><td>120</td></tr>
-                            </table>
-                        </div>
-                        <div>
-                            <table class="lbTable">
-                            <tr><td><img src="pfp.png"> USer1</td><td>120</td></tr>
-                            </table>
-                        </div>
-                    </div>
-
-                    <div class="lbTimed">
-                        <h2><u>Timed</u></h2>
-                        <div class="lbTimed2">
-                            <table class="lbTable">
-                                <tr><th>User</th><th>Score</th></tr>
-                                <tr><td><img src="pfp.png"> USer1</td><td>120</td></tr>
-                                <tr><td><img src="pfp.png"> USer1</td><td>120</td></tr>
-                                <tr><td><img src="pfp.png"> USer1</td><td>120</td></tr>
-                                <tr><td><img src="pfp.png"> USer1</td><td>120</td></tr>
-                                <tr><td><img src="pfp.png"> USer1</td><td>120</td></tr>
-                                <tr><td><img src="pfp.png"> USer1</td><td>120</td></tr>
-                                <tr><td><img src="pfp.png"> USer1</td><td>120</td></tr>
-                                <tr><td><img src="pfp.png"> USer1</td><td>120</td></tr>
-                                <tr><td><img src="pfp.png"> USer1</td><td>120</td></tr>
-                                <tr><td><img src="pfp.png"> USer1</td><td>120</td></tr>
-                                <tr><td><img src="pfp.png"> USer1</td><td>120</td></tr>
-                                <tr><td><img src="pfp.png"> USer1</td><td>120</td></tr>
-                                <tr><td><img src="pfp.png"> USer1</td><td>120</td></tr>
-                                <tr><td><img src="pfp.png"> USer1</td><td>120</td></tr>
-                                <tr><td><img src="pfp.png"> USer1</td><td>120</td></tr>
-                            </table>
-                        </div>
-                        <table class="lbTable">
-                            <tr class = "userScore"><th><img src="pfp.png"> USer1</th><th>120</th></tr>
-                        </table>
-
-                    </div>
-                        
-                </div>
-        </main>
-
-
-            <footer>
-            <nav class = "nav_links"> 
-                <ul>
-                    <li><a href = "index.html">Home</a></li>
-                    <li><a href = "categories.html">Categories</a></li>
-                    <li><a href = "profile.html">Profile</a></li>
-                </ul>
-            </nav>
-            </footer>
-    </body>
-</html>
+        </div>
+            
+    </div>
+</main>
+{% endblock %}

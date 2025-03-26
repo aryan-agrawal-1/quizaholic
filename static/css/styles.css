@@ -379,12 +379,25 @@ main a{
     background-color: #2E8BC0;
 }
 
+/* Add New Question Page */
+
+#finishbutton {
+    float:left;
+    border: 2px solid #2E8BC0;
+    background: #ccc;
+    border-radius: 2px;
+    font-size: 20px;
+    transition: 0.3s;
+    cursor: pointer;
+    width: 70px;
+    text-align: left;
+}
+
+
 /* Center Profile Section */
 .container {
     text-align: center;
     margin-bottom: 20px;
-    
-
 }
 
 .container h1 {
@@ -401,7 +414,6 @@ main a{
     border-radius: 50%;
 }
 
-/* Fix Quiz Heading */
 .quiz_heading {
     text-align: center;
     margin-bottom: 15px;
@@ -426,12 +438,12 @@ main a{
 .leaderboards_container {
     padding: 0px;
     display: flex;
-    flex-wrap: wrap; /* Allows items to wrap on small screens */
+    flex-wrap: wrap; 
     flex-direction: row;
     width: 100%;
     max-width: 1000px;
     min-height: auto;
-    justify-content: center; /* Center items */
+    justify-content: center;
     gap: 20px;
     background-color: #ccc;
     padding-bottom: 50px;
@@ -439,8 +451,8 @@ main a{
 }
 
 .lbNormal, .lbTimed {
-    width: 100%; /* Default full width */
-    max-width: 450px; /* Prevent it from stretching too much */
+    width: 100%; 
+    max-width: 450px; 
     text-align: center;
     
 }
@@ -521,37 +533,6 @@ img:hover{
     transition: width 1s linear;
 }
 
-/* Question */
-.question {
-    margin-top: 40px;
-    font-size: 1.2em;
-    margin-bottom: 20px;
-}
-
-/* Options */
-.options {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
-    margin-top: 100px;
-
-}
-
-.option {
-    height:80px;
-    padding: 10px;
-    border: 2px solid #2E8BC0;
-    background: white;
-    border-radius: 10px;
-    font-size: 1em;
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.option:hover {
-    background: #2E8BC0;
-    color: white;
-}
 
 /* Score */
 .score {
@@ -570,7 +551,7 @@ form label {
     float:left;
 }
 
-input[type=text],input[type=password] {
+input[type=text],input[type=password],#difficulty ,input[type=email]{
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
@@ -596,8 +577,46 @@ input[type=submit] {
   input[type=submit]:hover {
     background: #2E8BC0;
     color: white;
-  }
+  } 
   
+
+  #user_form li {
+    color:red;
+  }
+
+/* Question */
+.question {
+    margin-top: 40px;
+    font-size: 1.2em;
+    margin-bottom: 20px;
+}
+
+/* Options */
+.options {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+    margin-top: 100px;
+    width:100%;
+
+}
+
+.option {
+    height:80px;
+    padding: 10px;
+    border: 2px solid #2E8BC0;
+    width:100%;
+    background: white;
+    border-radius: 10px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.option:hover {
+    background: #2E8BC0;
+    color: white;
+}
 
 /* Footer Styling */
 footer {
@@ -685,6 +704,12 @@ footer a {
         height: 16px;
     }
 
+    .options {
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+    
+    }
+
 }
 
 @media (min-width: 901px) {
@@ -695,4 +720,78 @@ footer a {
     .auth_buttons {
         display: flex; 
     }
+}
+
+
+/* Set a style for all buttons */
+.Leaderbutton {
+    border: 2px solid #2E8BC0;
+    background: white;
+    font-size: 16px;
+    transition: 0.3s;
+    cursor: pointer;
+    font-family: "Courier New", monospace;
+    font-weight: bold;
+    padding: 10px;
+    width: 180px;
+    height:50px;
+    border-radius: 6px;
+    margin: 10px; 
+    text-align: center;
+}
+
+.Leaderbutton:hover {
+    background-color: #2E8BC0;
+    color:white;
+}
+
+.Leaderbutton {
+  float:none;
+  width: 50%;
+}
+
+.Leaderbutton {
+  background-color: white;
+}
+
+.container {
+  padding: 16px;
+  text-align: center;
+}
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: #474e5d;
+  padding-top: 50px;
+
+}
+
+/* Modal Content/Box */
+.modal-content {
+  background-color: #fefefe;
+  margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+  border: 1px solid #ccc;
+  width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* Clear floats */
+.clearfix::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+/* Change styles for cancel button and delete button on extra small screens */
+@media screen and (max-width: 300px) {
+   .Leaderbutton {
+    width: 100%;
+  }
 }
