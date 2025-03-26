@@ -1,15 +1,15 @@
-from django.db import models
+from django.db import model
 import random
 from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
 
-class User(models.Model):
+class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     streak = models.PositiveIntegerField(default=0)
-    image = models.ImageField(upload_to='user_images', null=True, blank=True)
+    profile_picture = models.ImageField(upload_to='profile_pics/', blank=True)
 
     def __str__(self):
-        return self.username
+        return self.user.username
 
 class Category(models.Model):
     name = models.CharField(max_length=255, unique=True)
@@ -94,3 +94,4 @@ class GameSession(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.category.name} ({self.mode}) - {self.score}"
+

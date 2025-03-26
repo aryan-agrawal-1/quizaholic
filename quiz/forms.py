@@ -1,6 +1,19 @@
 from django import forms
 from django.contrib.auth.models import User
 from .models import *
+from quiz.models import UserProfile
+
+class UserForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput())
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'password',)
+
+class UserProfileForm(forms.ModelForm):
+    class Meta:
+        model = UserProfile
+        fields = ('profile_picture',)
+
 
 class AddCategoryForm(forms.ModelForm):
     name = forms.CharField(max_length=128)
@@ -29,6 +42,5 @@ class AnswerForm(forms.Form):
         super().__init__(*args, **kwargs)
         if answers:
             self.fields['answers'].choices = [(a['answer_text'], a['answer_text']) for a in answers]
-
 
 
