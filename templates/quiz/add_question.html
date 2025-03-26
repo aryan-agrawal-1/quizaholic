@@ -9,38 +9,16 @@ AddCategory
 <main>
     <div class="quiz-container">
         
-        <!-- Change link here -->
-        <a href="profile.html"><button id ="finishbutton">Finish</button></a>
+        <a href="{% url 'quiz:profile'%}"><button id ="finishbutton">Finish</button></a>
         <br>
 
         <h1>Add Question</h1>
         <h3> Enter your question here! </h3>
 
-        <form id="add_question_form" method="post" action="{%  %}">
+        <form id="add_question_form" method="post" action="{% url 'quiz:add_question' category.slug %}">
 
             {% csrf_token %}
-            
-            <!-- Change this to use forms -->
-            <label>New Question :</label>
-            <br>
-            <input type="text" name="question" value="" size="50" />
-            <br>
-            <label>Option 1 (Correct Option):</label>
-            <br>
-            <input type="text" name="correct_option" value="" size="50" />
-            <br>
-            <label> Option 2:</label>
-            <br>
-            <input type="text" name="option" value="" size="50" />
-            <br>
-            <label>Option 3 :</label>
-            <br>
-            <input type="text" name="option" value="" size="50" />
-            <br>
-            <label>Option 4 :</label>
-            <br>
-            <input type="text" name="option" value="" size="50" />
-            <br>
+            {{ form.as_p }}
             <input type="submit" value="Create Question" />
         </form>
 

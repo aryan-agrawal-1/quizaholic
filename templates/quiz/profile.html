@@ -9,10 +9,12 @@ Profile
 <main class = "notmid">
 
     <div class="container">
-        <h1><img src="{% static 'images/pfp.png' %}"> {{ user.username }} </h1> 
-        {{ if user.streak != 0}}
-            <h1>(🔥 {{ user.streak }}-Day Streak)</h1>
-        {{ endif }}
+        <h1><img src="{{ user.userprofile.profile_picture.url }}" alt="Profile Picture" onerror="this.src='/media/profile_pics/default.png';"> {{ user.username }} </h1> 
+        <p id="pfplink"><a href ="{% url 'quiz:upload_profile_picture' %} ">(Change profile picture from here)</a></p>
+
+        {% if user.userprofile.streak and user.userprofile.streak != 0 %}
+        <h1>(🔥 {{ user.userprofile.streak }}-Day Streak)</h1>
+        {% endif %}
         <p>Add new questions by clicking on a category or add a new category</p>
     </div>
 
@@ -22,20 +24,18 @@ Profile
 
    <div class="categories-grid"> 
 
-        <!-- Something like this here -->
         {% if categories %}
-            {% for c in categories %}
-            <!-- Use urls here + varibles here -->
-            <a href="category.html">
+            {% for category in categories %}
+            <a href="{% url 'quiz:add_question' category.slug %}">
                 <div class="category_container">
-                    <img src="" alt="Category">
-                    <label>{{ c.name }}</label>
+                    <img src="{{ category.category_image.url }}" alt="Category" onerror="this.src='/media/category_imgs/default.jpg';">
+                    <label>{{ category.name }}</label>
                 </div>
             </a>
             {% endfor %}
         {% endif %}
 
-        <a href="add_category.html">            
+        <a href="{% url 'quiz:add_category' %}">            
             <div class = "category_container add-category">
                 <h1> + </h1>
             </div>

@@ -11,14 +11,10 @@ AddCategory
         <h1>Add Category</h1>
         <h3> Create your category here! </h3>
 
-        <form id="add_category_form" method="post" action="{%  %}">
+        <form id="add_category_form" method="post" action="{% url 'quiz:add_category' %}" enctype="multipart/form-data">
             {% csrf_token %}
+            {{ form.as_p }}
 
-            <!-- Change this to use forms -->
-            <label>New Category Name :</label>
-            <br>
-            <input type="text" name="new-category" value="" size="50" />
-            
             <input type="submit" value="Make Category" />
         </form>
     </div>

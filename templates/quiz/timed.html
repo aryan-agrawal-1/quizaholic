@@ -14,22 +14,22 @@
                 <div class="progress">
                 </div>
             </div>
-            
-            <!-- How do I change the question number -->
-            <span id="question-number">1/10</span>
-        </div>
-
-        <h2 class="question">{{ question.text }}</h2>
-
-        <div class="options">
-            <button class="option">{{ answer1 }}</button>
-            <button class="option">{{ answer2 }}</button>
-            <button class="option">{{ answer3 }}</button>
-            <button class="option">{{ answer4 }}</button>
-        </div>
-
+        </div>    
+        {%if question %}
+        <form id="timedQuestionForm" method = "POST">
+            {% csrf_token %}
+            <h2 class="question">{{question.question_text}}</h2> 
+            <div class="options">
+                {{form.answers}}
+                {% for answer in answers %}
+                <button type = "submit" class="option" name = "answers" value="{{ answer.answer_text }}">{{ answer.answer_text }}</button>
+                {% endfor %}
+            </div>
+        </form>
+    {% else %}
+    <p> No questions avaliable, </p>
+    {% endif %}
     </div>
-
 </main>
 <script src="{% static 'js/timer.js' %}"></script>
 

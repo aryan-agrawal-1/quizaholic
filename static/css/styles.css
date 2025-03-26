@@ -24,8 +24,8 @@ header {
     background-color: black;
     padding: 25px 20px;
     outline: 2px solid black;
-    width: 100%;
-
+    width:auto;
+    min-width: 100vw;
 }
 
 .header-left-group {
@@ -34,15 +34,14 @@ header {
     gap: 30px; 
 }
 
- .logo h1 {
-    font-size: 30px;
-    margin: 0;
+ .logo h1, .container h1{
     font-family:"Courier New", monospace;
+    margin: 0;
+    font-size: 30px;
     line-height: 1;
 } 
 
-
-.logo a {
+.logo a, footer a {
     text-decoration: none;
     color: white;
 }
@@ -50,11 +49,9 @@ header {
 .logo img{
     width:30px;
     height:30px;
+    border-radius: 8px;
     align-items: center;
-    border-radius: 8px;
     padding-right: 10px;
-    border-radius: 8px;
-
 }
 
 .nav_links{
@@ -149,6 +146,7 @@ header {
 .auth_buttons {
     display: flex;
     gap: 10px;
+    margin-right: 25px;
 }
 
 
@@ -165,17 +163,6 @@ header {
 
 .off-screen-menu button {
     margin-top: 10px;
-}
-
-.off-screen-menu img{
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    border: 1px solid #ddd;
-    display: flex;
-    object-fit: cover;
-    outline:auto;
-
 }
 
 .auth_buttons .message {
@@ -204,8 +191,8 @@ header {
 
 main {
     display: flex;
-    flex-direction: column; /* Stack items vertically */
-    justify-content: flex-start; /* Align content at the top */
+    flex-direction: column; 
+    justify-content: flex-start; 
     align-items: center;
     width: 100%;
     min-height: 85vh;
@@ -224,7 +211,7 @@ main a{
     padding: 30px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     width: 60%;
-    min-height: 400px; /* Adjust height dynamically */
+    min-height: 400px; 
     border-radius: 10px;
     display: flex;
     flex-direction: column;
@@ -475,16 +462,15 @@ main a{
     background-color: #ffffff;
     outline: auto;
     overflow-y: scroll;
-    height: 500px; /* Adjusted height */
+    height: 500px; 
 }
 
-/* Make table scrollable if needed */
 .lbTable {
     background-color: white;
     width: 100%;
     max-width: 400px;
     outline: auto;
-    overflow-x: auto; /* Allows horizontal scroll */
+    overflow-x: auto; 
 }
 
 th, td {
@@ -500,6 +486,7 @@ tr:hover{
 .lbTable img {
     width: 20px;
     height: 20px;
+    border-radius: 8px;
     align-items: center;
 }
 
@@ -512,7 +499,7 @@ img:hover{
 .quiz-container {
 
     width: 60%;
-    min-height: 400px; /* Adjust height dynamically */
+    min-height: 400px; 
     background: white;
     width: 60%;
     margin: 40px auto;
@@ -563,7 +550,7 @@ form label {
     float:left;
 }
 
-input[type=text],input[type=password],#difficulty ,input[type=email]{
+input[type=text],input[type=password],select ,input[type=email]{
     width: 100%;
     padding: 12px 20px;
     margin: 8px 0;
@@ -592,7 +579,7 @@ input[type=submit] {
   } 
   
 
-  #user_form li {
+  #user_form li ,#add_category_form li {
     color:red;
   }
 
@@ -637,6 +624,9 @@ footer {
     bottom:  0;
     width: 100%;
     outline: 2px solid rgb(0, 0, 0);
+    width:auto;
+    min-width: 100vw;
+
 
 }
 
@@ -676,10 +666,11 @@ footer a {
         gap: 20px;
     }
 
-    
+
     .burger-menu {
         display: block; 
         order: 2; 
+        margin-right: 20px;
     }
 
     .container {
@@ -701,7 +692,6 @@ footer a {
 
     .lbNormal, .lbTimed {
         width: 90%; 
-        max-width: 100%; 
         justify-content: center;
         align-items: center;
     }
@@ -714,6 +704,7 @@ footer a {
     .lbTable img {
         width: 16px;
         height: 16px;
+        border-radius: 8px;
     }
 
     .options {
@@ -721,7 +712,9 @@ footer a {
         grid-template-columns: repeat(1, 1fr);
     
     }
-
+    .holder h2 {
+        font-size: 29px;
+    }
 }
 
 @media (min-width: 901px) {
@@ -734,72 +727,17 @@ footer a {
     }
 }
 
-
-/* Set a style for all buttons */
-.Leaderbutton {
-    border: 2px solid #2E8BC0;
-    background: white;
-    font-size: 16px;
-    transition: 0.3s;
-    cursor: pointer;
-    font-family: "Courier New", monospace;
-    font-weight: bold;
-    padding: 10px;
-    width: 180px;
-    height:50px;
-    border-radius: 6px;
-    margin: 10px; 
-    text-align: center;
+.img_demo {
+    width: 100px;
+    height: 100px;
+    border-radius: 100%;
+    outline:auto;
 }
 
-.Leaderbutton:hover {
-    background-color: #2E8BC0;
-    color:white;
+#pfplink {
+    color:#2E8BC0;
 }
 
-.Leaderbutton {
-  float:none;
-  width: 50%;
-}
-
-.Leaderbutton {
-  background-color: white;
-}
-
-.container {
-  padding: 16px;
-  text-align: center;
-}
-
-/* The Modal (background) */
-.modal {
-  display: none; /* Hidden by default */
-  position: fixed; /* Stay in place */
-  z-index: 1; /* Sit on top */
-  left: 0;
-  top: 0;
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  overflow: auto; /* Enable scroll if needed */
-  background-color: #474e5d;
-  padding-top: 50px;
-
-}
-
-/* Modal Content/Box */
-.modal-content {
-  background-color: #fefefe;
-  margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
-  border: 1px solid #ccc;
-  width: 80%; /* Could be more or less, depending on screen size */
-}
-
-/* Clear floats */
-.clearfix::after {
-  content: "";
-  clear: both;
-  display: table;
-}
 
 /* Change styles for cancel button and delete button on extra small screens */
 @media screen and (max-width: 300px) {

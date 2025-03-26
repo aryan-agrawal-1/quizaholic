@@ -6,7 +6,7 @@
 
     {% if user.is_authenticated %}
     <h2 class = "message">Hello {{ user.username }}!</h2>
-    <a href=""><img src="{{ user.userprofile.profile_picture.url }}" alt="Profile Picture" onerror="this.src='/media/profile_pics/default.png';"></a>
+    <a href="{% url 'quiz:profile' %}"><img src="{{ user.userprofile.profile_picture.url }}" alt="Profile Picture" onerror="this.src='/media/profile_pics/default.png';"></a>
     {% else %}
     <a href = "{% url 'quiz:login' %}"> <button>Login</button></a>
     <a href = "{% url 'quiz:register' %}"> <button>Register</button></a>
