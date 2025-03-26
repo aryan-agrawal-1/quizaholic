@@ -1,4 +1,8 @@
-body {
+html, body {
+    background-image: url('/static/images/bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     font-family: 'Monaco', monospace;
     margin: 0;
     padding: 0;
@@ -8,6 +12,7 @@ body {
     min-height: 100%;
     overflow-x:hidden;
     
+   
 }
 
 /* 
@@ -16,7 +21,7 @@ header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #ccc;
+    background-color: black;
     padding: 25px 20px;
     outline: 2px solid black;
     width:auto;
@@ -38,7 +43,7 @@ header {
 
 .logo a, footer a {
     text-decoration: none;
-    color: black;
+    color: white;
 }
 
 .logo img{
@@ -193,6 +198,8 @@ main {
     min-height: 85vh;
     padding: 20px;
     box-sizing: border-box;
+
+
 }
 
 main a{
@@ -200,7 +207,7 @@ main a{
 }
 
 .holder {
-    background: white;
+    background: rgba(0, 0, 0, 0.7);
     padding: 30px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     width: 60%;
@@ -212,6 +219,8 @@ main a{
     align-items: center;
     text-align: center;
     margin: 40px auto;
+    color: white;
+    font-size: large;
 }
 
 .holder h2 {
@@ -232,9 +241,9 @@ main a{
 
 .holder button {
     border: 2px solid #2E8BC0;
-    background: white;
+    background: rgb(246, 255, 148);
     font-size: 16px;
-    transition: 0.3s;
+    transition: 0.3s ease-in-out;
     cursor: pointer;
     font-family: "Courier New", monospace;
     font-weight: bold;
@@ -247,8 +256,10 @@ main a{
 }
 
 .holder button:hover {
-    background: #2E8BC0;
-    color: white;
+
+    color: black;
+    transform: scale(1.1);
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
 }
 
 /* Make sure buttons wrap properly */
@@ -271,6 +282,7 @@ main a{
     padding: 20px;
     background-color: #ccc;
     text-align: left;
+    background: rgba(255, 255, 255, 0.8);
 }
 
 .container h1 {
@@ -607,7 +619,7 @@ input[type=submit] {
 
 /* Footer Styling */
 footer {
-    background-color: white;
+    background-color: black;
     padding: 25px 20px;
     bottom:  0;
     width: 100%;
@@ -724,4 +736,118 @@ footer a {
 
 #pfplink {
     color:#2E8BC0;
+}
+
+
+/* Change styles for cancel button and delete button on extra small screens */
+@media screen and (max-width: 300px) {
+   .Leaderbutton {
+    width: 100%;
+  }
+}
+
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-label, .form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="file"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; 
+}
+
+/* Error Messages */
+.error {
+    color: red;
+    font-size: 0.9em;
+    margin-top: 5px;
+}
+
+
+.btn {
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #0056b3;
+}
+
+.registration-box,
+.login-box {
+    max-width: 500px;
+    margin: 50px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #f9f9f9;
+    text-align: center;
+}
+
+.registration-box h1,
+.login-box h1 {
+    margin-bottom: 20px;
+}
+
+.registration-box p,
+.login-box p {
+    margin-bottom: 20px;
+}
+
+/* Remember Me Checkbox */
+.remember-me {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.remember-me label {
+    margin-left: 8px;
+    font-weight: normal;
+}
+
+.form-links {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.form-links p {
+    margin: 5px 0;
+}
+
+.form-links a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.form-links a:hover {
+    text-decoration: underline;
+}
+
+/* Dynamic box */
+@media (max-width: 480px) {
+    .registration-box,
+    .login-box {
+        max-width: 100%;
+        margin: 20px;
+        padding: 15px;
+    }
 }

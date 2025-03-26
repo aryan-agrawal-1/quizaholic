@@ -11,16 +11,16 @@ from random import choice
 def index(request):
     return render(request, 'quiz/index.html')
 
+
 def register(request):
     registered = False
     if request.method == 'POST':
-        user_form = UserForm(request.POST)
+        user_form = CustomUserCreationForm(request.POST)
         profile_form = UserProfileForm(request.POST, request.FILES)
 
         if user_form.is_valid() and profile_form.is_valid():
 
             user = user_form.save()
-            user.set_password(user.password)
             user.save()
 
             profile = profile_form.save(commit=False)
@@ -28,16 +28,23 @@ def register(request):
 
             if 'profile_picture' in request.FILES:
                 profile.profile_picture = request.FILES['profile_picture']
+
             profile.streak = 0; 
             profile.save()
             registered = True
+
+            messages.success(request, "Registration successful! You can now log in :)")
+            return redirect('registration:login')
         else:
-            print(user_form.errors, profile_form.errors)
+            for form in [user_form, profile_form]:
+                for field, errors in form.errors.items():
+                    for error in errors:
+                        messages.error(request, f"{field.capitalize()}: {error}")
     else:
-        user_form = UserForm()
+        user_form = CustomUserCreationForm()
         profile_form = UserProfileForm()
 
-    return render(request, 'quiz/register.html', {'user_form': user_form, 'profile_form': profile_form, 'registered': registered})
+    return render(request, 'registration/register.html', {'user_form': user_form, 'profile_form': profile_form, 'registered': registered})
 
 
 def user_login(request):
@@ -45,17 +52,25 @@ def user_login(request):
         username = request.POST.get('username')
         password = request.POST.get('password')
         user = authenticate(username=username, password=password)
+        remember_me = request.POST.get ('remember_me')
+
         if user:
             if user.is_active:
                 login(request, user)
+
+                if remember_me:
+                    request.session.set_expiry(1209600) #equivalent to 2 weeks
+                else: 
+                    request.session.set_expiry(0)
                 return redirect(reverse('quiz:index')) 
             else:
-                return HttpResponse("Your account is disabled.")  
+                messages.error(request, "Your account is disabled.")
         else:
             print(f"Invalid login details: {username}, {password}")
             return HttpResponse("Invalid login details supplied.")
     else: 
-        return render(request, 'quiz/login.html')
+        return render(request, 'registration/login.html')
+    
 
 @login_required
 def user_logout(request):
@@ -63,22 +78,20 @@ def user_logout(request):
     return redirect(reverse('quiz:index'))
 
 @login_required
-def restricted(request):
-    return HttpResponse("Since you're logged in, you can see this text!")
-
-@login_required
 def upload_profile_picture(request):
     user_profile, created = UserProfile.objects.get_or_create(user=request.user)
 
-    if request.method == 'POST':
+    if request.method == 'POST' and 'profile_picture' in request.FILES:
         form = UserProfileForm(request.POST, request.FILES, instance=user_profile)
         if form.is_valid():
+            if user_profile.profile_picture:
+                user_profile.profile_picture.delete()
+
             form.save()
             messages.success(request, "Profile picture updated successfully.")
             return redirect('quiz:profile')
-
     else:
-        form = UserProfileForm()
+        form = UserProfileForm(instance=user_profile)
     return render(request, 'quiz/changepfp.html', {'form': form})
 
 #lists all the different catgeories avaliable

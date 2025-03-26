@@ -11,8 +11,8 @@ class UserProfile(models.Model):
 
     def __str__(self):
         return self.user.username
-
-
+    
+    
 class Category(models.Model):
     name = models.CharField(max_length=255, unique=True)
     slug = models.SlugField(max_length=255, unique=True, blank=True)
@@ -117,4 +117,3 @@ class GameSession(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.category.name} ({self.mode}) - {self.score}"
-

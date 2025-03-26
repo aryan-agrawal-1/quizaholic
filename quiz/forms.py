@@ -2,9 +2,12 @@ from django import forms
 from django.contrib.auth.models import User
 from .models import *
 from quiz.models import UserProfile
+from django.contrib.auth.forms import UserCreationForm
 
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
+    email = forms.EmailField(widget=forms.EmailInput())
+    
     class Meta:
         model = User
         fields = ('username', 'email', 'password',)
@@ -12,12 +15,26 @@ class UserForm(forms.ModelForm):
             'username': None,
         }
 
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['username'].help_text = None 
+        
 
 class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ('profile_picture',)
 
+
+class CustomUserCreationForm(UserCreationForm):
+    class Meta:
+        model = User
+        fields = ("username", "password1", "password2")
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['username'].help_text = None
+        
 class AddCategoryForm(forms.ModelForm):
     name = forms.CharField(max_length=128)
     slug = forms.CharField(widget=forms.HiddenInput(), required=False)
