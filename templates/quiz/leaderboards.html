@@ -1,3 +1,5 @@
+<!DOCTYPE html>
+{% load staticfiles %}
 <html>
     <head>
         <meta charset="UTF-8">
@@ -5,7 +7,7 @@
         <title>
             Quizhaholic
         </title>
-        <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="{% static 'files/styles.css' %}">
     </head>
     <body>
 
@@ -35,38 +37,30 @@
         <main class="leaderboards">
 
                 <div class="container">
-                    <h1> Category LeaderBoards </h1>
+                    <h1>{{category.slug}} LeaderBoards </h1>
                     <p>Check the leaderboards where do you rank among the best?</p>
                 </div>
 
                <div class="leaderboards_container">
 
                     <div class="lbNormal">
-                        <h2><u>Classic</u></h2>
+                        <h2><u>Normal</u></h2>
                         <div class = "lbNormal2">
                             <table class="lbTable">
-                                <tr><th>User</th><th>Score</th></tr>
-                                <tr><td><img src="pfp.png"> USer1</td><td>120</td></tr>
-                                <tr><td><img src="pfp.png"> USer1</td><td>120</td></tr>
-                                <tr><td><img src="pfp.png"> USer1</td><td>120</td></tr>
-                                <tr><td><img src="pfp.png"> USer1</td><td>120</td></tr>
-                                <tr><td><img src="pfp.png"> USer1</td><td>120</td></tr>
-                                <tr><td><img src="pfp.png"> USer1</td><td>120</td></tr>
-                                <tr><td><img src="pfp.png"> USer1</td><td>120</td></tr>
-                                <tr><td><img src="pfp.png"> USer1</td><td>120</td></tr>
-                                <tr><td><img src="pfp.png"> USer1</td><td>120</td></tr>
-                                <tr><td><img src="pfp.png"> USer1</td><td>120</td></tr>
-                                <tr><td><img src="pfp.png"> USer1</td><td>120</td></tr>
-                                <tr><td><img src="pfp.png"> USer1</td><td>120</td></tr>
-                                <tr><td><img src="pfp.png"> USer1</td><td>120</td></tr>
-                                <tr><td><img src="pfp.png"> USer1</td><td>120</td></tr>
-                                <tr><td><img src="pfp.png"> USer1</td><td>120</td></tr>
+                                <tr><th>Rank</th><th>User</th><th>Score</th></tr>
+                                {% for entry in normal %}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td><img src="{% static 'pfp.png' %}"> {{ entry.user.username }}</td>
+                                    <td>{{ entry.score }}</td>
+                                </tr>
+                                {% empty %}
+                                <tr><td colspan="3">No scores yet.</td></tr>
+                                {% endfor %}
                             </table>
                         </div>
                         <div>
-                            <table class="lbTable">
-                            <tr><td><img src="pfp.png"> USer1</td><td>120</td></tr>
-                            </table>
+             
                         </div>
                     </div>
 
@@ -74,27 +68,19 @@
                         <h2><u>Timed</u></h2>
                         <div class="lbTimed2">
                             <table class="lbTable">
-                                <tr><th>User</th><th>Score</th></tr>
-                                <tr><td><img src="pfp.png"> USer1</td><td>120</td></tr>
-                                <tr><td><img src="pfp.png"> USer1</td><td>120</td></tr>
-                                <tr><td><img src="pfp.png"> USer1</td><td>120</td></tr>
-                                <tr><td><img src="pfp.png"> USer1</td><td>120</td></tr>
-                                <tr><td><img src="pfp.png"> USer1</td><td>120</td></tr>
-                                <tr><td><img src="pfp.png"> USer1</td><td>120</td></tr>
-                                <tr><td><img src="pfp.png"> USer1</td><td>120</td></tr>
-                                <tr><td><img src="pfp.png"> USer1</td><td>120</td></tr>
-                                <tr><td><img src="pfp.png"> USer1</td><td>120</td></tr>
-                                <tr><td><img src="pfp.png"> USer1</td><td>120</td></tr>
-                                <tr><td><img src="pfp.png"> USer1</td><td>120</td></tr>
-                                <tr><td><img src="pfp.png"> USer1</td><td>120</td></tr>
-                                <tr><td><img src="pfp.png"> USer1</td><td>120</td></tr>
-                                <tr><td><img src="pfp.png"> USer1</td><td>120</td></tr>
-                                <tr><td><img src="pfp.png"> USer1</td><td>120</td></tr>
-                            </table>
+                                <tr><th>Rank</th><th>User</th><th>Score</th></tr>
+                                {% for entry in timed %}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td><img src="{% static 'pfp.png' %}"> {{ entry.user.username }}</td>
+                                    <td>{{ entry.score }}</td>
+                                </tr>
+                                {% empty %}
+                                <tr><td colspan="3">No scores yet.</td></tr>
+                                {% endfor %}
+                            </table>   
                         </div>
-                        <table class="lbTable">
-                            <tr class = "userScore"><th><img src="pfp.png"> USer1</th><th>120</th></tr>
-                        </table>
+                      
 
                     </div>
                         

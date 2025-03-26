@@ -13,7 +13,7 @@ Home
 {% endblock %}
 
 
-{% block main_block %}
+{% block main_body_block %}
 <main class = "categories">
 
     <div class="container">
@@ -27,10 +27,9 @@ Home
 
     {% if categories %}
         {% for c in categories %}
-        <!-- Use urls here + varibles here -->
-        <a href="category.html">
+        <a href= "{%url 'quiz:category' c.slug %}">
             <div class="category_container">
-                <img src="" alt="Category">
+                <img src="gk.jpg" alt="Category">
                 <label>{{ c.name }}</label>
             </div>
         </a>
@@ -39,44 +38,7 @@ Home
         <li><strong>There are no categories present.</strong></li>
     {% endif %}
 
-            <!-- Use for loop here + urls -->
-
-        <a href="category.html">
-            <div class="category_container">
-                <img src="gk.jpg" alt="Category">
-                <label>Category XX</label>
-            </div>
-        </a>
-        <a href="category.html">
-            <div class="category_container">
-                <img src="gk.jpg" alt="Category">
-                <label>Category XX</label>
-            </div>
-        </a>
-        <a href="category.html">
-            <div class="category_container">
-                <img src="gk.jpg" alt="Category">
-                <label>Category XX</label>
-            </div>
-        </a>
-        <a href="category.html">
-            <div class="category_container">
-                <img src="gk.jpg" alt="Category">
-                <label>Category XX</label>
-            </div>
-        </a>
-        <a href="category.html">
-            <div class="category_container">
-                <img src="gk.jpg" alt="Category">
-                <label>Category XX</label>
-            </div>
-        </a>
-        <a href="category.html">
-            <div class="category_container">
-                <img src="gk.jpg" alt="Category">
-                <label>Category XX</label>
-            </div>
-        </a>
+    
     </div>
 </main>
 {% endblock %}

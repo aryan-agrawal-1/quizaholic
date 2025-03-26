@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load staticfiles %}
 
 <html>
     <head>
@@ -7,14 +8,14 @@
         <title>
             Quizhaholic
         </title>
-        <link rel="stylesheet" href="styles.css">
+        <link rel="stylesheet" href="{% static 'files/styles.css' %}">
     </head>
     <body>
 
         <header>
             <div class="header-left-group">
                 <div class="logo">
-                    <h1><a href="index.html"><img src="logo.png">Quizhaholic</a></h1>
+                    <h1><a href="{% url 'quiz:index' %}"><img src="logo.png">Quizhaholic</a></h1>
                 </div>
                 <nav class="nav_links">
                     <ul>
@@ -36,18 +37,23 @@
 
             <main>
                 <div class="quiz-container">
-                    <div class="timer-container">
-                        <span id="question-number">1/xx</span>
-                    </div>
-        
-                    <h2 class="question">Which Chinese dynasty ruled from 1644 until 1911?</h2>
-        
-                    <div class="options">
-                        <button class="option">MC_A</button>
-                        <button class="option">MC_B</button>
-                        <button class="option">MC_C</button>
-                        <button class="option">MC_D</button>
-                    </div>
+                    {%if question %}
+                        <form method = "POST">
+                            {% csrf_token %}
+                            <div class="timer-container">
+                                
+                            </div>
+                            <h2 class="question">{{question.question_text}}</h2> 
+                            <div class="options">
+                                {{form.answers}}
+                            </div>
+                            {% for answer in answers %}
+                            <button class="option" type = "submit" name = "answers" value="{{ answer.answer_text }}">{{ answer.answer_text }}</button>
+                            {% endfor %}
+                        </form>
+                    {% else %}
+                    <p> No questions avaliable, </p>
+                    {% endif %}
                 </div>
             </main>
 

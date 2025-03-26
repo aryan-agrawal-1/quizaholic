@@ -1,8 +1,9 @@
 from django.db import models
+import random
 from django.template.defaultfilters import slugify
 from django.contrib.auth.models import User
 
-class UserProfile(models.Model):
+class User(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     streak = models.PositiveIntegerField(default=0)
     image = models.ImageField(upload_to='user_images', null=True, blank=True)
@@ -22,6 +23,22 @@ class Category(models.Model):
             self.slug = slugify(self.name)
         super().save(*args, **kwargs)
 
+class Quiz(models.Model):
+    title = models.CharField(max_length=200)
+    description = models.TextField(blank=True, null=True)
+    creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='created_quizzes')
+    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True, related_name='quizzes')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    slug = models.SlugField(unique=True)
+
+    def save(self, *args, **kwargs):
+        self.save = slugify(self.name)
+        super(Quiz, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return self.title
+
 
 class Question(models.Model):
     DIFFICULTY_CHOICES = [
@@ -37,6 +54,14 @@ class Question(models.Model):
 
     def __str__(self):
         return self.question_text[:50]
+    
+    def get_answer(self):
+        answers= list(Answer.objects.filter(question = self))
+        data = []
+        random.shuffle(answers)
+        for answer in answers:
+            data.append({'answer_text' : answer.answer_text, 'is_correct': answer.is_correct})
+        return data
 
     def save(self, *args, **kwargs):
         if self.difficulty == 'easy':
@@ -56,6 +81,8 @@ class Answer(models.Model):
 
     def __str__(self):
         return self.answer_text[:50]
+    
+
 
 
 class GameSession(models.Model):
