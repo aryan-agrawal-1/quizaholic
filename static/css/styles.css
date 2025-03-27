@@ -71,7 +71,7 @@ header {
 }
 
 .nav_links ul li a {
-    color: #2E8BC0;
+    color: #ffffff;
     text-decoration: underline;
     font-size: 16px;
 }
@@ -166,7 +166,7 @@ header {
 }
 
 .auth_buttons .message {
-    color: #333;
+    color: #ffffff;
     font-size: 16px;
     margin: 0;
     display: flex;
@@ -308,6 +308,16 @@ main a{
     outline:auto;
 
 }
+
+.quiz_heading, .category_container {
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;  
+    padding: 20px; 
+    margin: 10px 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+
 .categories-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -332,6 +342,7 @@ main a{
     vertical-align: top;
     flex-direction: column;
     transition: 0.3s;
+    
 }
 
 .category_container:hover {
@@ -601,11 +612,18 @@ input[type=submit] {
 }
 
 .option {
+    border: 2px solid #2E8BC0;
+    background: rgb(246, 255, 148);
+    transition: 0.3s ease-in-out;
+    cursor: pointer;
+    font-family: "Courier New", monospace;
+    font-weight: bold;
+    margin: 10px; 
+    text-align: center;
     height:80px;
     padding: 10px;
-    border: 2px solid #2E8BC0;
+    border: 2px solid #5c37b0;
     width:100%;
-    background: white;
     border-radius: 10px;
     font-size: 1em;
     cursor: pointer;
@@ -613,8 +631,9 @@ input[type=submit] {
 }
 
 .option:hover {
-    background: #2E8BC0;
-    color: white;
+    color: black;
+    transform: scale(1.1);
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
 }
 
 /* Footer Styling */
@@ -779,7 +798,7 @@ input[type="file"] {
 .btn {
     width: 100%;
     padding: 10px;
-    background-color: #007bff;
+    background-color: #450b30;
     color: white;
     border: none;
     border-radius: 4px;

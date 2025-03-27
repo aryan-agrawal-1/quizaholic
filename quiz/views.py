@@ -34,7 +34,7 @@ def register(request):
             registered = True
 
             messages.success(request, "Registration successful! You can now log in :)")
-            return redirect('registration:login')
+            return redirect('accounts:login')
         else:
             for form in [user_form, profile_form]:
                 for field, errors in form.errors.items():
@@ -58,7 +58,7 @@ def user_login(request):
             if user.is_active:
                 login(request, user)
 
-                if remember_me:
+                if remember_me is not None:
                     request.session.set_expiry(1209600) #equivalent to 2 weeks
                 else: 
                     request.session.set_expiry(0)
@@ -108,8 +108,12 @@ def category(request, category_slug):
     category = get_object_or_404(Category,slug=category_slug)
     questions = Question.objects.filter(category=category)
     print(f"Questions for {category}: {questions}")
+
+    if request.user.is_authenticated:
+        modes = ['learn', 'normal', 'timed']
+    else:
+        modes = ['normal']
     
-    modes = ['learn', 'normal', 'timed']
     first_question = questions.first()
     context_dict['category'] = category
     context_dict['questions'] = questions
