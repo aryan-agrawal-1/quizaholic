@@ -1,23 +1,9 @@
-{% extends 'quiz/base.html' %}
+{% extends 'quiz/second_base.html' %}
 {% load staticfiles %}
 
 {% block title_block %}
-Home
+Game Over
 {% endblock %}
-
-{% block auth_buttons_block %}
-<div class = "auth_buttons">
-    <!-- Change urls here -->
-    {% if user.is_authenticated %}
-    <h2 class = "message">Hello {{user.username}}!</h2>
-    <a href="profile.html"><img src="pfp.png"></a>
-    {% else %}
-    <a href = "login.html"> <button>Login</button></a>
-    <a href = "register.html"> <button>Register</button></a>
-    {% endif %}
-</div>
-{% endblock %}
-
 
 {% block main_body_block %}
 <main>    
@@ -26,7 +12,6 @@ Home
         <label>Wrong Answer Selected, go back to Categories!</label>
         <h1>Quiz Over!</h1>
         <p>Your final score: {{ score }}</p>
-        <!-- Change url here -->
         <a href ="{% url 'quiz:categories' %}"><button>Go to Categories</button></a>
     </div>
 </main>

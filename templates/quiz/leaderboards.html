@@ -1,101 +1,85 @@
-<!DOCTYPE html>
+{% extends 'quiz/second_base.html' %}
 {% load staticfiles %}
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">    
-        <title>
-            Quizhaholic
-        </title>
-        <link rel="stylesheet" href="{% static 'files/styles.css' %}">
-    </head>
-    <body>
 
-        <header>
-            <div class="header-left-group">
-                <div class="logo">
-                    <h1><a href="index.html"><img src="logo.png">Quizhaholic</a></h1>
-                </div>
-                <nav class="nav_links">
-                    <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="categories.html">Categories</a></li>
-                        <li><a href="profile.html">Profile</a></li>
-                    </ul>
-                </nav>
+{% block title_block %}
+Leaderboards - {{ category.name }}
+{% endblock %}
+
+{% block main_body_block %}
+<main class="leaderboards">
+
+    <div class="container">
+        <h1> {{ category.name }} LeaderBoards </h1>
+        <p>Check the leaderboards where do you rank among the best?</p>
+    </div>
+
+   <div class="leaderboards_container">
+
+        <div class="lbNormal">
+            <h2><u>Normal</u></h2>
+            <div class = "lbNormal2">
+                <table class="lbTable">
+                    <tr><th>Rank</th><th>User</th><th>Score</th></tr>
+                
+                    {% for entry in normal %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td><img src="{{ entry.user.userprofile.profile_picture.url }}"> {{ entry.user.username }}</td>
+                        <td>{{ entry.score }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="3">No scores yet.</td></tr>
+                    {% endfor %}
+
+                </table>
             </div>
-
-            <div class = "auth_buttons">
-                    <a href = "login.html"> <button>Login</button></a>
-                    <a href = "register.html"> <button>Register</button></a>
+            <div>
+                <table class="lbTable">
+                    {% if user.is_authenticated %}
+                    <tr class = "userScore">
+                        <th><img src="{{ user.userprofile.profile_picture.url }}" alt="Profile Picture" onerror="this.src='/media/profile_pics/default.png';"> {{ user.username }}</th>
+                        {% if user_score_normal %} 
+                        <th>{{ user_score_normal.score }}</th>
+                        {% else %}
+                        <th>0</th>
+                        {% endif %}
+                    </tr>
+                    {% endif %}    
+                </table>
             </div>
+        </div>
 
-            <button class="burger-menu">☰</button>
+        <div class="lbTimed">
+            <h2><u>Timed</u></h2>
+            <div class="lbTimed2">
+                <table class="lbTable">
+                    <tr><th>Rank</th><th>User</th><th>Score</th></tr>
+                    {% for entry in timed %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td><img src="{{ entry.user.userprofile.profile_picture.url }}"> {{ entry.user.username }}</td>
+                        <td>{{ entry.score }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="3">No scores yet.</td></tr>
+                    {% endfor %}
+                </table>
+            </div>
+            <table class="lbTable">
+                {% if user.is_authenticated %}
+                <tr class = "userScore">
+                    <th><img src="{{ user.userprofile.profile_picture.url }}" alt="Profile Picture" onerror="this.src='/media/profile_pics/default.png';"> {{ user.username }}</th>
+                    {% if user_score_timed %} 
+                    <th>{{ user_score_timed.score }}</th>
+                    {% else %}
+                    <th>0</th>
+                    {% endif %}
+                </tr>
+                {% endif %}
+            </table>
 
-        </header>
-
-        <main class="leaderboards">
-
-                <div class="container">
-                    <h1>{{category.slug}} LeaderBoards </h1>
-                    <p>Check the leaderboards where do you rank among the best?</p>
-                </div>
-
-               <div class="leaderboards_container">
-
-                    <div class="lbNormal">
-                        <h2><u>Normal</u></h2>
-                        <div class = "lbNormal2">
-                            <table class="lbTable">
-                                <tr><th>Rank</th><th>User</th><th>Score</th></tr>
-                                {% for entry in normal %}
-                                <tr>
-                                    <td>{{ forloop.counter }}</td>
-                                    <td><img src="{% static 'pfp.png' %}"> {{ entry.user.username }}</td>
-                                    <td>{{ entry.score }}</td>
-                                </tr>
-                                {% empty %}
-                                <tr><td colspan="3">No scores yet.</td></tr>
-                                {% endfor %}
-                            </table>
-                        </div>
-                        <div>
-             
-                        </div>
-                    </div>
-
-                    <div class="lbTimed">
-                        <h2><u>Timed</u></h2>
-                        <div class="lbTimed2">
-                            <table class="lbTable">
-                                <tr><th>Rank</th><th>User</th><th>Score</th></tr>
-                                {% for entry in timed %}
-                                <tr>
-                                    <td>{{ forloop.counter }}</td>
-                                    <td><img src="{% static 'pfp.png' %}"> {{ entry.user.username }}</td>
-                                    <td>{{ entry.score }}</td>
-                                </tr>
-                                {% empty %}
-                                <tr><td colspan="3">No scores yet.</td></tr>
-                                {% endfor %}
-                            </table>   
-                        </div>
-                      
-
-                    </div>
-                        
-                </div>
-        </main>
-
-
-            <footer>
-            <nav class = "nav_links"> 
-                <ul>
-                    <li><a href = "index.html">Home</a></li>
-                    <li><a href = "categories.html">Categories</a></li>
-                    <li><a href = "profile.html">Profile</a></li>
-                </ul>
-            </nav>
-            </footer>
-    </body>
-</html>
+        </div>
+            
+    </div>
+</main>
+{% endblock %}

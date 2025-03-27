@@ -1,0 +1,27 @@
+{% extends 'quiz/second_base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+Change Profile Picture
+{% endblock %}
+
+{% block main_body_block %}
+<main>    
+    <div class="holder">
+
+        <h1>Change Profile Picture</h1>
+
+        <form id="add_category_form" method="post" action="{% url 'quiz:upload_profile_picture' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            <p><h3> Current Profile Picture :</h3>
+
+             <img class="img_demo" src="{{ user.userprofile.profile_picture.url }}" alt="Profile Picture" onerror="this.src='/media/profile_pics/default.png';"> </p> 
+
+
+            <p><h3 for="{{ form.profile_picture.id_for_label }}"> New Profile Picture :</h3></p>
+            {{ form.profile_picture }}</p>
+                    <input type="submit" value="Change Profile Picture" />
+        </form>
+    </div>
+</main>
+{% endblock %}

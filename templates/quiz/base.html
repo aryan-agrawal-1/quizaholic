@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 {% load staticfiles %}
-
 <html>
     <head>
         <meta charset="UTF-8">
@@ -10,10 +9,8 @@
             {% block title_block %}
             {% endblock %}
         </title>
-
-        <!-- Change url of style sheet here -->
-        <link rel="stylesheet" href="{% static 'files/styles.css' %}">
-        <script src="{% static 'files/script.js' %}"></script>
+        <link rel="icon" href="{% static 'images/logo.png' %}">
+        <link rel="stylesheet" href="{% static 'css/styles.css' %}" /> 
     </head>
     <body>
 
@@ -21,15 +18,15 @@
             <div class="header-left-group">
                 <div class="logo">
 
-                    <!-- Change urls here -->
-                    <h1><a href="index.html"><img src="">Quizhaholic</a></h1> 
+                    <h1><a href="{% url 'quiz:index' %}"><img src="{% static 'images/logo.png' %}">Quizhaholic</a></h1> 
                 </div>
                 <nav class="nav_links">
                     <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href= "{% url 'quiz:categories' %}">Categories</a></li>
+                        <li><a href="{% url 'quiz:index' %}">Home</a></li>
+                        <li><a href="{% url 'quiz:categories' %}">Categories</a></li>
                         {% if user.is_authenticated %}
-                        <li><a href="profile.html">Profile</a></li>
+                        <li><a href="{% url 'quiz:profile' %}">Profile</a></li>
+                        <li><a href = "{% url 'quiz:logout' %}">Logout</a></li>
                         {% endif %}
 
                     </ul>
@@ -39,28 +36,25 @@
             {% block auth_buttons_block %}
             {% endblock %}
 
+            <button class="burger-menu">☰</button>
 
             <div class="off-screen-menu">
                 <ul>
-                    <!-- Change urls here -->
-
-                    <li><a href="index.html">Home</a></li>
+                    <li><a href="{% url 'quiz:index' %}">Home</a></li>
                     <li><a href="{% url 'quiz:categories' %}">Categories</a></li>
-                    <li><a href="profile.html">Profile</a></li>
                     {% if user.is_authenticated %}
-                    <li><a href="profile.html">Profile</a></li>
+                    <li><a href="{% url 'quiz:profile' %}">Profile</a></li>
+                    <li><a href="{% url 'quiz:logout' %}">Logout</a></li>
                     {% else %}
-                    <a href="login.html"><button>Login</button></a>
-                    <a href="register.html"><button>Register</button></a>
+                    <a href="{% url 'quiz:login' %}"><button>Login</button></a>
+                    <a href="{% url 'quiz:register' %}"><button>Register</button></a>
                     {% endif %}
                 </ul>
             </div>
 
-            <button class="burger-menu">☰</button>
             <div class="menu-overlay"></div>
 
-            <script src="static/files/script.js"></script>
-
+            <script src="{% static 'js/script.js' %}"></script>
         </header>
 
         {% block main_body_block %}
@@ -69,10 +63,11 @@
         <footer>
             <nav class = "nav_links"> 
                 <ul>
-                    <li><a href = "index.html">Home</a></li>
+                    <li><a href = "{% url 'quiz:index' %}">Home</a></li>
                     <li><a href = "{% url 'quiz:categories' %}">Categories</a></li>
                     {% if user.is_authenticated %}
-                    <li><a href = "profile.html">Profile</a></li>
+                    <li><a href = "{% url 'quiz:profile' %}">Profile</a></li>
+                    <li><a href = "{% url 'quiz:logout' %}">Logout</a></li>
                     {% endif %}
                 </ul>
             <nav>

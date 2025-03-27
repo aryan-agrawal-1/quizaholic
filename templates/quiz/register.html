@@ -1,68 +1,33 @@
-<!DOCTYPE html>
+{% extends 'quiz/base.html' %}
+{% load staticfiles %}
 
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">    
-        <title>
-            Quizhaholic
-        </title>
-        <link rel="stylesheet" href="styles.css">
-    </head>
-    <body>
+{% block title_block %}
+Register
+{% endblock %}
 
-        <header>
-            <div class="header-left-group">
-                <div class="logo">
-                    <h1><a href="index.html"><img src="">Quizhaholic</a></h1>
-                </div>
-                <nav class="nav_links">
-                    <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="categories.html">Categories</a></li>
-                        <li><a href="profile.html">Profile</a></li>
-                    </ul>
-                </nav>
-            </div>
+{% block main_body_block %}
+<main>
+    <div class="quiz-container">
 
-            <div class = "auth_buttons">
-                    <a href = "login.html"> <button>Login</button></a>
-                    <a href = "register.html"> <button>Register</button></a>
-            </div>
+        {% if registered %}
+          <h1>Thank you for registering!</h1>
+        <a href="{% url 'quiz:index' %}">Return to the homepage.</a><br />
+        <a href="{% url 'quiz:login' %}">Goto login page..</a><br />
+        {% else %}
 
-            <button class="burger-menu">☰</button>
+        <h1>Register</h1>
 
-        </header>
+        <h3> or <a href="{% url 'quiz:login' %}"><u>login</u></a> if you already have an account! </h3>
 
-        <main>
-            <div class="quiz-container">
-                <h1>Register</h1>
-                <h3> or <a href="login.html"><u>login</u></a> if you already have an account! </h3>
+        <form id="user_form" method="post" action="{% url 'quiz:register' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ user_form.as_p }}
+            {{ profile_form.as_p }}
+            <!-- Provide a button to click to submit the form. -->
+            <input type="submit" name="submit" value="Register" />
+        </form>
+        {% endif %}
 
-
-                <form id="register_form" method="post" action="{%  %}">
-                    <label>User Name :</label>
-                    <br>
-                    <input type="text" name="username" value="" size="50" />
-                    <br />
-                    <label>Password :</label>
-                    <br>
-                    <input type="password" name="password" value="" size="50" />
-                    <br />
-                    <input type="submit" value="Register" />
-                </form>
-            </div>
-        </main>
-
-
-            <footer>
-            <nav class = "nav_links"> 
-                <ul>
-                    <li><a href = "index.html">Home</a></li>
-                    <li><a href = "categories.html">Categories</a></li>
-                    <li><a href = "profile.html">Profile</a></li>
-                </ul>
-            </nav>
-            </footer>
-    </body>
-</html>
+    </div>
+</main>
+{% endblock %}

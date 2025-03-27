@@ -1,71 +1,28 @@
-<!DOCTYPE html>
+{% extends 'quiz/second_base.html' %}
 {% load staticfiles %}
 
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">    
-        <title>
-            Quizhaholic
-        </title>
-        <link rel="stylesheet" href="{% static 'files/styles.css' %}">
-    </head>
-    <body>
+{% block title_block %}
+{{ category.name }} Learn
+{% endblock %}
 
-        <header>
-            <div class="header-left-group">
-                <div class="logo">
-                    <h1><a href="{% url 'quiz:index' %}"><img src="logo.png">Quizhaholic</a></h1>
+{% block main_body_block %}
+<main>
+    <div class="quiz-container">
+        {%if question %}
+            <form method = "POST">
+                {% csrf_token %}
+                <h2 class="question">{{question.question_text}}</h2> 
+                <div class="options">
+                {{form.answers}}
+                {% for answer in answers %}
+                <button type = "submit" class="option" name = "answers" value="{{ answer.answer_text }}">{{ answer.answer_text }}</button>
+                {% endfor %}
                 </div>
-                <nav class="nav_links">
-                    <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="categories.html">Categories</a></li>
-                        <li><a href="profile.html">Profile</a></li>
-                    </ul>
-                </nav>
-            </div>
+            </form>
+        {% else %}
+        <p> No questions avaliable, </p>
+        {% endif %}
+    </div>
+</main>
 
-            <div class = "auth_buttons">
-                    <a href = "login.html"> <button>Login</button></a>
-                    <a href = "register.html"> <button>Register</button></a>
-            </div>
-
-            <button class="burger-menu">☰</button>
-
-        </header>
-
-            <main>
-                <div class="quiz-container">
-                    {%if question %}
-                        <form method = "POST">
-                            {% csrf_token %}
-                            <div class="timer-container">
-                                
-                            </div>
-                            <h2 class="question">{{question.question_text}}</h2> 
-                            <div class="options">
-                                {{form.answers}}
-                            </div>
-                            {% for answer in answers %}
-                            <button class="option" type = "submit" name = "answers" value="{{ answer.answer_text }}">{{ answer.answer_text }}</button>
-                            {% endfor %}
-                        </form>
-                    {% else %}
-                    <p> No questions avaliable, </p>
-                    {% endif %}
-                </div>
-            </main>
-
-
-            <footer>
-            <nav class = "nav_links"> 
-                <ul>
-                    <li><a href = "index.html">Home</a></li>
-                    <li><a href = "categories.html">Categories</a></li>
-                    <li><a href = "profile.html">Profile</a></li>
-                </ul>
-            </nav>
-            </footer>
-    </body>
-</html>
+{% endblock %}

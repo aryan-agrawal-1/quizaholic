@@ -1,74 +1,46 @@
-<!DOCTYPE html>
+{% extends 'quiz/second_base.html' %}
+{% load staticfiles %}
 
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">    
-        <title>
-            Quizhaholic
-        </title>
-        <link rel="stylesheet" href="styles.css">
-    </head>
-    <body>
+{% block title_block %}
+Profile
+{% endblock %}
 
-        <header>
-            <div class="header-left-group">
-                <div class="logo">
-                    <h1><a href="index.html"><img src="logo.png">Quizhaholic</a></h1>
+{% block main_body_block %}
+<main class = "notmid">
+
+    <div class="container">
+        <h1><img src="{{ user.userprofile.profile_picture.url }}" alt="Profile Picture" onerror="this.src='/media/profile_pics/default.png';"> {{ user.username }} </h1> 
+        <p id="pfplink"><a href ="{% url 'quiz:upload_profile_picture' %} ">(Change profile picture from here)</a></p>
+
+        {% if user.userprofile.streak and user.userprofile.streak != 0 %}
+        <h1>(🔥 {{ user.userprofile.streak }}-Day Streak)</h1>
+        {% endif %}
+        <p>Add new questions by clicking on a category or add a new category</p>
+    </div>
+
+    <div class = "quiz_heading">
+        <h1>My Categories</h1> 
+    </div>
+
+   <div class="categories-grid"> 
+
+        {% if categories %}
+            {% for category in categories %}
+            <a href="{% url 'quiz:add_question' category.slug %}">
+                <div class="category_container">
+                    <img src="{{ category.category_image.url }}" alt="Category" onerror="this.src='/media/category_imgs/default.jpg';">
+                    <label>{{ category.name }}</label>
                 </div>
-                <nav class="nav_links">
-                    <ul>
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="categories.html">Categories</a></li>
-                        <li><a href="profile.html">Profile</a></li>
-                    </ul>
-                </nav>
+            </a>
+            {% endfor %}
+        {% endif %}
+
+        <a href="{% url 'quiz:add_category' %}">            
+            <div class = "category_container add-category">
+                <h1> + </h1>
             </div>
+        </a>        
+    </div>
+</main>
 
-            <div class = "auth_buttons">
-                <h2 class = "message">Hello User123@!</h2>
-                <a href="profile.html"><img src="pfp.png"></a>
-            </div>
-
-            <button class="burger-menu">☰</button>
-
-        </header>
-
-            <main class = "notmid">
-
-                <div class="container">
-                    <h1><img src="pfp.png"> User123 (🔥 2-Day Streak)</h1> 
-                    <p>Check categories you have made or create new ones!</p>
-                </div>
-    
-                <div class = "quiz_heading">
-                    <h1>My Categories</h1> 
-                </div>
-
-               <div class="categories-grid"> 
-                <a href="category.html">
-                    <div class="category_container">
-                        <img src="placeholder.jpg" alt="Category">
-                        <label>Category XX</label>
-                    </div>
-                </a>   
-                <a href="add_category.html">            
-                    <div class = "category_container add-category">
-                        <h1> + </h1>
-                    </div>
-                </a>        
-                </div>
-            </main>
-
-
-            <footer>
-            <nav class = "nav_links"> 
-                <ul>
-                    <li><a href = "index.html">Home</a></li>
-                    <li><a href = "categories.html">Categories</a></li>
-                    <li><a href = "profile.html">Profile</a></li>
-                </ul>
-            </nav>
-            </footer>
-    </body>
-</html>
+{% endblock %}
