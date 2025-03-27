@@ -7,7 +7,7 @@ function startTimer() {
     progressBar.style.width = "100%";
     
     setTimeout(() => {
-        window.location.href = "/quiz/finish";
+        document.getElementById('timedQuestionForm').submit();
     }, 5000);// 5secons change how long here
 }
 // Start the timer when the page loads

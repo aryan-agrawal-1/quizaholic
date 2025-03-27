@@ -8,10 +8,23 @@ Game Over
 {% block main_body_block %}
 <main>    
     <div class="holder">
-        <h1>Quizaholic</h1>
-        <label>Wrong Answer Selected, go back to Categories!</label>
-        <h1>Quiz Over!</h1>
-        <p>Your final score: {{ score }}</p>
+        <h1>Game Over</h1>
+        {% if category %}
+        <p>Category: {{ category.name }}</p>
+        {% endif %}
+        
+        {% if total_questions %}
+        <div class="difficulty-breakdown">
+            <h2>Difficulty Breakdown</h2>
+            <label>Questions attempted: {{ total_questions }}</label>
+            <ul>
+                <li>Easy questions: {{ difficulty_counts.easy }}</li>
+                <li>Medium questions: {{ difficulty_counts.medium }}</li>
+                <li>Hard questions: {{ difficulty_counts.hard }}</li>
+            </ul>
+        </div>
+        {% endif %}
+        <p>Your total score: {{ score }} points</p>
         <a href ="{% url 'quiz:categories' %}"><button>Go to Categories</button></a>
     </div>
 </main>

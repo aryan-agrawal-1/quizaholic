@@ -34,12 +34,13 @@ def register(request):
             registered = True
 
             messages.success(request, "Registration successful! You can now log in :)")
-            return redirect('accounts:login')
+            return redirect('quiz:login')
         else:
             for form in [user_form, profile_form]:
                 for field, errors in form.errors.items():
                     for error in errors:
-                        messages.error(request, f"{field.capitalize()}: {error}")
+                        field_name = "Password" if field.startswith("password") else field.capitalize()
+                        messages.error(request, f"{field_name}: {error}")
     else:
         user_form = CustomUserCreationForm()
         profile_form = UserProfileForm()
@@ -84,20 +85,24 @@ def upload_profile_picture(request):
     if request.method == 'POST' and 'profile_picture' in request.FILES:
         form = UserProfileForm(request.POST, request.FILES, instance=user_profile)
         if form.is_valid():
-            if user_profile.profile_picture:
-                user_profile.profile_picture.delete()
 
             form.save()
             messages.success(request, "Profile picture updated successfully.")
             return redirect('quiz:profile')
     else:
-        form = UserProfileForm(instance=user_profile)
+        form = UserProfileForm()
     return render(request, 'quiz/changepfp.html', {'form': form})
 
 #lists all the different catgeories avaliable
 def categories(request):
-    categories = Category.objects.all()
-    print(categories)
+    if request.user.is_authenticated:
+        categories = Category.objects.filter(
+            models.Q(created_by__isnull=True) | 
+            models.Q(created_by=request.user) 
+        )
+    else:
+        categories = Category.objects.filter(created_by__isnull=True)
+
     context_dict={}
     context_dict['categories'] = categories
     return render(request, 'quiz/categories.html', context = context_dict)
@@ -159,6 +164,13 @@ def fetch_question(request, category_slug, mode, question_id):
         user=None 
     game_session, created = GameSession.objects.get_or_create(user=user, category=category, mode=mode)
 
+
+    if 'current_category' not in request.session or request.session['current_category'] != category_slug:
+        request.session['current_score'] = 0
+        request.session['current_difficulty'] = []
+        request.session['current_category'] = category_slug
+        request.session.modified = True
+
     if request.method == "POST":
         form = AnswerForm(data = request.POST, answers = answers)
         if form.is_valid():
@@ -168,9 +180,12 @@ def fetch_question(request, category_slug, mode, question_id):
                 if a['answer_text'] == selected_answer:
                     if a['is_correct']:
                         is_correct = True
-                        request.session['score'] = request.session.get('score',0) + question_text.score
-                        game_session.score += question_text.score
-                        game_session.save()
+                        request.session['current_score'] += question_text.score
+                        request.session['current_difficulty'].append(question_text.difficulty)
+                        # request.session['score'] = request.session.get('score',0) + question_text.score
+                        #game_session.score += question_text.score
+                        #game_session.save()
+                        request.session.modified = True
                         break
                      
             if not is_correct and mode == 'normal':
@@ -196,8 +211,33 @@ def finish_view(request):
     user = request.user if request.user.is_authenticated else None
     game_session = GameSession.objects.filter(user=user).order_by('-created_at').first()
 
-    score = game_session.score if game_session else 0    
-    return render(request, 'quiz/finishplay.html')    
+    current_score = request.session.get('current_score', 0)
+    current_difficulty = request.session.get('current_difficulty', [])
+    current_category_slug = request.session.get('current_category', '')
+
+    try:
+        current_category = Category.objects.get(slug=current_category_slug)
+    except Category.DoesNotExist:
+        current_category = None
+
+    difficulty_counts = {
+        'easy': current_difficulty.count('easy'),
+        'medium': current_difficulty.count('medium'),
+        'hard': current_difficulty.count('hard')
+    }
+
+    request.session['current_score'] = 0
+    request.session['current_difficulty'] = []
+    request.session['current_category'] = ''
+    request.session.modified = True
+
+    return render(request, 'quiz/finishplay.html', {
+        'score': current_score,
+        'total_questions': len(current_difficulty),
+        'difficulty_counts': difficulty_counts,
+        'category': current_category
+    })
+ 
 
 @login_required
 def profile(request):
