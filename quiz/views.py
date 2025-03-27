@@ -163,7 +163,7 @@ def fetch_question(request, category_slug, mode, question_id):
        user = User.objects.get(id=request.user.id)
     else:
         user=None 
-    game_session, created = GameSession.objects.get_or_create(user=user, category=category, mode=mode)
+
 
 
     if 'current_category' not in request.session or request.session['current_category'] != category_slug:
