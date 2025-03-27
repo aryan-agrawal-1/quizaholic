@@ -172,10 +172,21 @@ def fetch_question(request, category_slug, mode, question_id):
         request.session['current_category'] = category_slug
         request.session['mode'] = mode
         request.session.modified = True
+        request.session['played'] = False
 
     if request.method == "POST":
         form = AnswerForm(data = request.POST, answers = answers)
         if form.is_valid():
+
+            if mode == 'learn':
+                question_id = Question.objects.filter(category=category).values_list('id', flat=True)
+                next_question= Question.objects.get(id=choice(question_id))
+                if next_question:
+                    return redirect( 'quiz:fetch_question', category_slug = category_slug, mode = mode, question_id = next_question.id )
+                else:
+                    return redirect('quiz:category', category_slug = category_slug)
+
+            request.session['played'] = True
             selected_answer = form.cleaned_data['answers']
             is_correct = False 
             for a in answers:
@@ -214,6 +225,9 @@ def finish_view(request):
     #game_session = GameSession.objects.filter(user=user).order_by('-created_at').first()
 
     #score = game_session.score if game_session else 0  
+
+    if not request.session.get('current_category') or not request.session.get('played'):
+        return redirect('quiz:index')
 
     current_score = request.session.get('current_score', 0)
     current_difficulty = request.session.get('current_difficulty', [])
