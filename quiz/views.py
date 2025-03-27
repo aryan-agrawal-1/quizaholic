@@ -164,8 +164,6 @@ def fetch_question(request, category_slug, mode, question_id):
     else:
         user=None 
 
-
-
     if 'current_category' not in request.session or request.session['current_category'] != category_slug:
         request.session['current_score'] = 0
         request.session['current_difficulty'] = []
@@ -195,9 +193,6 @@ def fetch_question(request, category_slug, mode, question_id):
                         is_correct = True
                         request.session['current_score'] += question_text.score
                         request.session['current_difficulty'].append(question_text.difficulty)
-                        # request.session['score'] = request.session.get('score',0) + question_text.score
-                        #game_session.score += question_text.score
-                        #game_session.save()
                         request.session.modified = True
                         break
                      
