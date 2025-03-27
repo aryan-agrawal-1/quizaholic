@@ -15,7 +15,6 @@ urlpatterns = [
     path('categories/<slug:category_slug>/',views.category, name ='category' ),
     path('categories/<slug:category_slug>/leaderboard', views.leaderboard, name = 'leaderboard'),
     path('categories/<slug:category_slug>/<str:mode>/<int:question_id>/', views.fetch_question, name = 'fetch_question'),
-    path('register/',views.register, name = 'register'),
     path('login/', views.user_login, name='login'),
     path('logout/', views.user_logout, name='logout'),
     path('upload-profile-picture/', views.upload_profile_picture, name='upload_profile_picture'),
