@@ -8,7 +8,7 @@ html, body {
     padding: 0;
     text-align: center;
     background-color: white;
-    max-width: 97.5%;
+    max-width: 100%;
     min-height: 100%;
     overflow-x:hidden;
     
@@ -81,10 +81,16 @@ header {
     margin-left: 10px;
 }
 
+.nav_links ul li a:hover{
+    color: #2E8BC0;
+}
+
+
 /* Burger Menu Styling */
 .burger-menu {
     display: none;
     background: none;
+    color:white;
     border: none;
     font-size: 24px;
     cursor: pointer;
@@ -101,7 +107,7 @@ header {
     left: 0;
     height: 100vh;
     width: 250px;
-    background-color: #ccc;
+    background-color: black;
     transform: translateX(-100%);
     transition: transform 0.3s ease-in-out;
     z-index: 1000;
@@ -140,7 +146,9 @@ header {
     display: none;
 }
 
-
+.off-screen-menu ul li a:hover {
+    color:white;
+}
 
 /* Auth Buttons Styling */
 .auth_buttons {
@@ -173,7 +181,7 @@ header {
     margin-top: 6px;
 }
 
-.auth_buttons button:hover {
+.auth_buttons button:hover , .off-screen-menu button:hover {
     background: #2E8BC0;
     color: white;
 } 
@@ -869,4 +877,8 @@ input[type="file"] {
         margin: 20px;
         padding: 15px;
     }
+}
+
+#True {
+    background-color: aquamarine;
 }

@@ -34,7 +34,7 @@ def register(request):
             registered = True
 
             messages.success(request, "Registration successful! You can now log in :)")
-            return redirect('accounts:login')
+            return redirect('quiz:login')
         else:
             for form in [user_form, profile_form]:
                 for field, errors in form.errors.items():
@@ -84,14 +84,12 @@ def upload_profile_picture(request):
     if request.method == 'POST' and 'profile_picture' in request.FILES:
         form = UserProfileForm(request.POST, request.FILES, instance=user_profile)
         if form.is_valid():
-            if user_profile.profile_picture:
-                user_profile.profile_picture.delete()
 
             form.save()
             messages.success(request, "Profile picture updated successfully.")
             return redirect('quiz:profile')
     else:
-        form = UserProfileForm(instance=user_profile)
+        form = UserProfileForm()
     return render(request, 'quiz/changepfp.html', {'form': form})
 
 #lists all the different catgeories avaliable

@@ -10,11 +10,12 @@
     <div class="holder">
         <h2>{{ category.name }}</h2>
         
+        {% if first_question %}
         <!-- Maybe change these -->
         <label>Choose a game mode or view the leaderboards</label>
 
         {% if user.is_authenticated %}
-            <label>Learn Mode: Answer questions with no points until you get bored</label>
+            <label>Learn Mode: Check the answers to all the questions</label>
         {% endif %}
         
         <label>Normal Mode : Answer questions with points until you get one wrong</label>
@@ -44,6 +45,11 @@
 
             <a href="{% url 'quiz:leaderboard' category.slug %}"><button>Leaderboards</button></a>
         </div>
+
+        {% else %}
+        <h3>There are no questions in this category. In the meantime checkout other categories.</h3>
+
+        {% endif %}
     </div>
 </main>
 

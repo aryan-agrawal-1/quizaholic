@@ -15,7 +15,7 @@
                 <div class="options">
                 {{form.answers}}
                 {% for answer in answers %}
-                <button type = "submit" class="option" name = "answers" value="{{ answer.answer_text }}">{{ answer.answer_text }}</button>
+                <button id="{{ answer.is_correct }}"type = "submit" class="option" name = "answers" value="{{ answer.answer_text }}">{{ answer.answer_text }}</button>
                 {% endfor %}
                 </div>
             </form>
