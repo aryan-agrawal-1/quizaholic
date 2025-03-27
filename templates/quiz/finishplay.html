@@ -25,7 +25,7 @@ Game Over
         </div>
         {% endif %}
         <p>Your total score: {{ score }} points</p>
-        <a href ="{% url 'quiz:categories' %}"><button>Go to Categories</button></a>
+        <a href ="{% url 'quiz:leaderboard' category.slug %}"><button>Check Leaderboards</button></a>
     </div>
 </main>
 {% endblock %}

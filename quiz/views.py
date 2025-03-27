@@ -1,3 +1,4 @@
+from sqlite3 import IntegrityError
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import *
 from django.contrib.auth import login, logout, authenticate
@@ -169,6 +170,7 @@ def fetch_question(request, category_slug, mode, question_id):
         request.session['current_score'] = 0
         request.session['current_difficulty'] = []
         request.session['current_category'] = category_slug
+        request.session['mode'] = mode
         request.session.modified = True
 
     if request.method == "POST":
@@ -216,6 +218,7 @@ def finish_view(request):
     current_score = request.session.get('current_score', 0)
     current_difficulty = request.session.get('current_difficulty', [])
     current_category_slug = request.session.get('current_category', '')
+    current_mode = request.session.get('mode', '')
 
     try:
         current_category = Category.objects.get(slug=current_category_slug)
@@ -232,6 +235,23 @@ def finish_view(request):
     request.session['current_difficulty'] = []
     request.session['current_category'] = ''
     request.session.modified = True
+
+    # Check if the user is authenticated and update the game session
+    if request.user.is_authenticated:
+        if current_mode != 'learn' and current_mode != '':
+            user = request.user
+            try:
+                game_session, created = GameSession.objects.get_or_create(
+                    user=user,
+                    category=current_category,
+                    mode=current_mode,  
+                )
+                if game_session.score < current_score:
+                    game_session.score = current_score
+
+                game_session.save()  
+            except IntegrityError:
+                return redirect('quiz:index')
 
     return render(request, 'quiz/finishplay.html', {
         'score': current_score,
