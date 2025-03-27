@@ -159,11 +159,11 @@ def fetch_question(request, category_slug, mode, question_id):
     form = AnswerForm(answers = answers)
     value = question_text.score
 
-    #if request.user.is_authenticated:
-     #  user = User.objects.get(id=request.user.id)
-    #else:
-    #    user=None 
-    #game_session, created = GameSession.objects.get_or_create(user=user, category=category, mode=mode)
+    if request.user.is_authenticated:
+       user = User.objects.get(id=request.user.id)
+    else:
+        user=None 
+
 
 
     if 'current_category' not in request.session or request.session['current_category'] != category_slug:
@@ -221,10 +221,8 @@ def fetch_question(request, category_slug, mode, question_id):
     return render(request, template, context = context_dict)
 
 def finish_view(request):
-    #user = request.user if request.user.is_authenticated else None
-    #game_session = GameSession.objects.filter(user=user).order_by('-created_at').first()
-
-    #score = game_session.score if game_session else 0  
+    user = request.user if request.user.is_authenticated else None
+    game_session = GameSession.objects.filter(user=user).order_by('-created_at').first()
 
     if not request.session.get('current_category') or not request.session.get('played'):
         return redirect('quiz:index')
@@ -273,8 +271,7 @@ def finish_view(request):
         'difficulty_counts': difficulty_counts,
         'category': current_category
     })
-
-    # return render(request, 'quiz/finishplay.html')    
+ 
 
 @login_required
 def profile(request):
