@@ -119,11 +119,17 @@ class Command(BaseCommand):
         
         for profile in UserProfile.objects.all():
             category = random.choice(categories)
+            mode = random.choice(modes)
+            if mode =='normal' : 
+                score=random.randint(0, 1000)
+            else:
+                score=random.randint(0, 100)
+
             GameSession.objects.create(
                 user=profile.user,
                 category=category,
-                mode=random.choice(modes),
-                score=random.randint(0, 1000)
+                mode=mode,
+                score=score
             )
 
 if __name__ == '__main__':
