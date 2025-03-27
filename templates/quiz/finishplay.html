@@ -9,12 +9,14 @@ Game Over
 <main>    
     <div class="holder">
         <h1>Game Over</h1>
+        {% if category %}
+        <p>Category: {{ category.name }}</p>
+        {% endif %}
         
-        
-        {% if difficulty_breakdown %}
+        {% if total_questions %}
         <div class="difficulty-breakdown">
             <h2>Difficulty Breakdown</h2>
-            <p>Questions attempted: {{ difficulty_breakdown|length }}</p>
+            <label>Questions attempted: {{ total_questions }}</label>
             <ul>
                 <li>Easy questions: {{ difficulty_counts.easy }}</li>
                 <li>Medium questions: {{ difficulty_counts.medium }}</li>
@@ -22,7 +24,7 @@ Game Over
             </ul>
         </div>
         {% endif %}
-        <label>Your total score: {{ score }} points</label>
+        <p>Your total score: {{ score }} points</p>
         <a href ="{% url 'quiz:categories' %}"><button>Go to Categories</button></a>
     </div>
 </main>

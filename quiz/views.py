@@ -165,9 +165,11 @@ def fetch_question(request, category_slug, mode, question_id):
     #game_session, created = GameSession.objects.get_or_create(user=user, category=category, mode=mode)
 
 
-    if 'current_score' not in request.session:
+    if 'current_category' not in request.session or request.session['current_category'] != category_slug:
         request.session['current_score'] = 0
         request.session['current_difficulty'] = []
+        request.session['current_category'] = category_slug
+        request.session.modified = True
 
     if request.method == "POST":
         form = AnswerForm(data = request.POST, answers = answers)
@@ -213,6 +215,12 @@ def finish_view(request):
 
     current_score = request.session.get('current_score', 0)
     current_difficulty = request.session.get('current_difficulty', [])
+    current_category_slug = request.session.get('current_category', '')
+
+    try:
+        current_category = Category.objects.get(slug=current_category_slug)
+    except Category.DoesNotExist:
+        current_category = None
 
     difficulty_counts = {
         'easy': current_difficulty.count('easy'),
@@ -222,12 +230,14 @@ def finish_view(request):
 
     request.session['current_score'] = 0
     request.session['current_difficulty'] = []
+    request.session['current_category'] = ''
     request.session.modified = True
 
     return render(request, 'quiz/finishplay.html', {
         'score': current_score,
-        'difficulty_breakdown': current_difficulty,
+        'total_questions': len(current_difficulty),
         'difficulty_counts': difficulty_counts,
+        'category': current_category
     })
 
     # return render(request, 'quiz/finishplay.html')    
