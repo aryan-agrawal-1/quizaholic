@@ -28,7 +28,7 @@ REGISTRATION_AUTO_LOGIN = True
 LOGIN_REDIRECT_URL = 'quiz:index'
 # The page users are directed to if they are not logged in.
 # This was set in a previous chapter. The registration package uses this, too.
-LOGIN_URL = 'auth_login'
+LOGIN_URL = 'quiz:login'
 # settings.py
 
 LOGOUT_REDIRECT_URL = '/'

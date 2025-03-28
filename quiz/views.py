@@ -60,7 +60,7 @@ def user_login(request):
             if user.is_active:
                 login(request, user)
 
-                if remember_me is not None:
+                if remember_me:
                     request.session.set_expiry(1209600) #equivalent to 2 weeks
                 else: 
                     request.session.set_expiry(0)
@@ -252,11 +252,12 @@ def finish_view(request):
                     user=user,
                     category=current_category,
                     mode=current_mode,  
+                    defaults={'score': current_score}
                 )
                 if game_session.score < current_score:
                     game_session.score = current_score
 
-                game_session.save()  
+                    game_session.save()  
             except IntegrityError:
                 return redirect('quiz:index')
 
