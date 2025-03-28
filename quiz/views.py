@@ -172,6 +172,15 @@ def fetch_question(request, category_slug, mode, question_id):
         request.session.modified = True
         request.session['played'] = False
 
+    if 'mode' not in request.session or request.session['mode'] != mode:
+        request.session['current_score'] = 0
+        request.session['current_difficulty'] = []
+        request.session['mode'] = mode
+        request.session.modified = True
+
+    if mode== 'timed':
+        request.session['played'] = True
+        
     if request.method == "POST":
         form = AnswerForm(data = request.POST, answers = answers)
         if form.is_valid():
