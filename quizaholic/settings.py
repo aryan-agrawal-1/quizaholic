@@ -44,7 +44,7 @@ SECRET_KEY = '3o+lod!k44l6vb+(dejn4l3h^09$7!-6vj2j+te146d5gkokix'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['AryanA.pythonanywhere.com']
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
