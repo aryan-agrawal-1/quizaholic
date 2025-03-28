@@ -40,7 +40,7 @@ LOGOUT_REDIRECT_URL = '/'
 
 # SECURITY WARNING: keep the secret key used in production secret!
 key = None
-with open('secret_key') as f:
+with open('secret.key') as f:
     key = f.read().strip()
 
 SECRET_KEY = key
